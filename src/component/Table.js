@@ -101,7 +101,7 @@ export default class Index extends React.Component {
                         this.getList();
                     })
                 }}
-                scroll={{ y: window.innerHeight - 368,x:1500 }}
+                scroll={{ y: window.innerHeight - 368,x:1000 }}
                 {...this.props}
             />
         );

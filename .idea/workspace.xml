@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="28e8e385-64bc-4239-aa17-1fb0fc5d2f43" name="Default Changelist" comment="init" />
+    <list default="true" id="28e8e385-64bc-4239-aa17-1fb0fc5d2f43" name="Default Changelist" comment="init">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Table.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/system/admin/AdminList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/admin/AdminList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/system/role/RoleList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/role/RoleList.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,6 +35,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -59,7 +66,16 @@
       <workItem from="1724314366253" duration="38000" />
       <workItem from="1724314855828" duration="30000" />
       <workItem from="1724314901412" duration="8000" />
+      <workItem from="1724315002076" duration="709000" />
     </task>
+    <task id="LOCAL-00001" summary="init">
+      <created>1724315054792</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1724315054792</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -76,6 +92,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init" />
+    <option name="LAST_COMMIT_MESSAGE" value="init" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -24,32 +24,38 @@ const Index = (_props: any, ref: any) => {
 			title: 'ID',
 			align: 'center',
 			dataIndex: 'admin_id',
-			width: 90,
+			width: 80,
 		}, {
 			title: '用户昵称',
 			align: 'center',
+			width: 120,
 			dataIndex: 'username'
 		}, {
 			title: '上次登录时间',
 			align: 'center',
 			dataIndex: 'last_login_time',
+			width: 180,
 			render: (time: string) => `${time || '-'}`
 		}, {
 			title: '上次登录IP',
 			align: 'center',
+			width: 180,
 			dataIndex: 'last_login_ip',
 			render: (ip: string) => `${ip || '-'}`
 		}, {
 			title: '角色',
 			align: 'center',
+			width: 120,
 			dataIndex: 'role_name'
 		}, {
 			title: '添加时间',
 			align: 'center',
+			width: 180,
 			dataIndex: 'atime'
 		}, {
 			title: '操作',
 			dataIndex: 'id',
+			width: 150,
 			align: 'center',
 			render: (id: number, item: any) => (
 				<div className='flexAllCenter pubbtnbox'>
@@ -140,7 +146,7 @@ const Index = (_props: any, ref: any) => {
 						ref={tableRef}
 						columns={columns}
 						onRefresh={onRefresh}
-
+						scroll={{ y: window.innerHeight - 368,x:1010 }}
 					/>
 				</div>
 			</div>

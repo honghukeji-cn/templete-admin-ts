@@ -21,23 +21,27 @@ const Index = (_props: any, _ref: any) => {
 			title: '序号',
 			align: 'center',
 			dataIndex: 'key',
-			width: 90,
+			width: 80,
 		}, {
 			title: '角色名称',
 			align: 'center',
-			dataIndex: 'role_name'
+			dataIndex: 'role_name',
+			width: 120,
 		}, {
 			title: '角色描述',
 			align: 'center',
-			dataIndex: 'describe'
+			dataIndex: 'describe',
+			width: 180,
 		}, {
 			title: '添加时间',
 			align: 'center',
+			width: 180,
 			dataIndex: 'atime'
 		}, {
 			title: '操作',
 			dataIndex: 'id',
 			align: 'center',
+			width: 150,
 			render: (id: number, item: any) => (
 				<div className='flexAllCenter pubbtnbox'>
 					<p style={{ color: colorPrimary }} onClick={() => {
@@ -110,7 +114,7 @@ const Index = (_props: any, _ref: any) => {
 						ref={tableRef}
 						columns={columns}
 						onRefresh={onRefresh}
-						scroll={{ y: window.innerHeight - 368 }}
+						scroll={{ y: window.innerHeight - 368,x:710 }}
 					/>
 				</div>
 			</div>
