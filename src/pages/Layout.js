@@ -45,6 +45,9 @@ const Components = {
 let tabRef = [];
 const list = (path, id) => {
     var MyComponentt = Components[path];
+    if(!MyComponentt){
+        MyComponentt=Page404;
+    }
     tabRef[id] = createRef();
     return(
         <Suspense fallback={<Loading />}>

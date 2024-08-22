@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28e8e385-64bc-4239-aa17-1fb0fc5d2f43" name="Default Changelist" comment="更新table默认宽度">
+      <change afterPath="$PROJECT_DIR$/src/pages/Page404.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/static/404.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/UploadSet.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/UploadSet.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,13 +35,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages" />
+      <recent name="$PROJECT_DIR$/src/static" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/pages/system" />
       <recent name="$PROJECT_DIR$/src/pages/system/menu" />
@@ -67,7 +72,8 @@
       <workItem from="1724314855828" duration="30000" />
       <workItem from="1724314901412" duration="8000" />
       <workItem from="1724315002076" duration="761000" />
-      <workItem from="1724343400150" duration="54000" />
+      <workItem from="1724343400150" duration="82000" />
+      <workItem from="1724344805078" duration="65000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1724315054792</created>
@@ -83,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724315754241</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="更新table默认宽度">
+      <created>1724343469373</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1724343469373</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
