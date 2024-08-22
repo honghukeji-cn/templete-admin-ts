@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import type { FC } from 'react';
-import { App, Button, Form, Input, Switch } from 'antd';
+import {App, Button, Col, Form, Input, Row, Switch} from 'antd';
 import Title from '../../component/Title';
 import * as req from '../../util/request';
 import type { FormInstance } from 'antd/es/form';
@@ -21,14 +21,14 @@ const Index = (_props: any, ref: any) => {
     useImperativeHandle(ref, () => ({
         refresh,
     }))
-    // 
+    //
     const refresh = () => {
         req.post('setting/getUploadConfig', {}).then(res => {
             if (res.code === 1) {
                 res.data.qiniu.visible = false;
                 res.data.alioss.visible = false;
                 res.data.txcos.visible = false;
-             
+
                 if (res.data.visible == 1) {
                     res.data.qiniu.visible = true;
                 } else if (res.data.visible == 2) {
@@ -64,7 +64,7 @@ const Index = (_props: any, ref: any) => {
         let obj: any = data[key];
         let url = 'setting/saveLocal';
         console.log(obj);
-        
+
         if (key === 'qiniu') {
             url = "setting/saveQiniu";
             obj.visible = obj.visible ? 1 : 0;
@@ -110,121 +110,129 @@ const Index = (_props: any, ref: any) => {
         }
     }
     return (
-        <div className='uploadBox flwp'>
-            <div className='margb20 bgbai margr24'>
-                <Title title='七牛云配置' />
-                <Form
-                    autoComplete='off'
-                    labelCol={{ flex: '70px' }}
-                    onFinish={onFinish}
-                    ref={qnFormRef}
-                    initialValues={{
-                        qiniu: info.qiniu,
-                    }}
-                >
-                    <Form.Item label='AK' name={['qiniu', 'AK']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='SK' name={['qiniu', 'SK']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='仓库名称' name={['qiniu', 'bucket']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='七牛域名' name={['qiniu', 'domain']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='使用状态' name={['qiniu', 'visible']} className='paddh' valuePropName='checked'>
-                        <Switch checkedChildren='开启' unCheckedChildren='关闭' />
-                    </Form.Item>
-                    <div className='paddh flex flex_end paddb20' style={{ marginTop: 80 }}>
-                        <Button type='primary' className='huibtn marginr12' onClick={() => reset('qiniu')}>重置</Button>
-                        <Button type='primary' htmlType='submit'>保存</Button>
-                    </div>
-                </Form>
-            </div>
-            <div className='margb20 bgbai margr24'>
-                <Title title='阿里OSS配置' />
-                <Form
-                    autoComplete='off'
-                    labelCol={{ flex: '100px' }}
-                    ref={aliFormRef}
-                    name='alioss'
-                    onFinish={onFinish}
-                >
-                    <Form.Item label='AccessKeyID' name={['alioss', 'ak']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='AccessKey' name={['alioss', 'sk']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='仓库名称' name={['alioss', 'bucket']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='endpoint' name={['alioss', 'endpoint']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='自定义域名' name={['alioss', 'domain']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='使用状态' name={['alioss', 'visible']} className='paddh' valuePropName='checked'>
-                        <Switch checkedChildren='开启' unCheckedChildren='关闭' />
-                    </Form.Item>
-                    <div className='paddh flex flex_end paddb20'>
-                        <Button type='primary' className='huibtn marginr12' onClick={() => reset('alioss')}>重置</Button>
-                        <Button type='primary' htmlType='submit'>保存</Button>
-                    </div>
-                </Form>
-            </div>
-            <div className='margb20 bgbai margr24'>
-                <Title title='腾讯云配置' />
-                <Form
-                    autoComplete='off'
-                    labelCol={{ flex: '100px' }}
-                    ref={txFormRef}
-                    onFinish={onFinish}
-                >
-                    <Form.Item label='AccessKeyID' name={['txcos', 'AK']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='SAccessKeyK' name={['txcos', 'SK']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='仓库名称' name={['txcos', 'bucketName']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='bucket' name={['txcos', 'bucket']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='自定义域名' name={['txcos', 'domain']} className='paddh'>
-                        <Input placeholder='请输入' />
-                    </Form.Item>
-                    <Form.Item label='使用状态' name={['txcos', 'visible']} className='paddh' valuePropName='checked'>
-                        <Switch checkedChildren='开启' unCheckedChildren='关闭' />
-                    </Form.Item>
-                    <div className='paddh flex flex_end paddb20'>
-                        <Button type='primary' className='huibtn marginr12' onClick={() => reset('txcos')}>重置</Button>
-                        <Button type='primary' htmlType='submit'>保存</Button>
-                    </div>
-                </Form>
-            </div>
-            <div className=' bgbai margb20'>
-                <Title title='本地配置' />
-                <Form
-                    autoComplete='off'
-                    ref={localFormRef}
-                    onFinish={onFinish}
-                >
-                    <Form.Item label='使用状态' name={['local', 'visible']}  className='paddh' valuePropName='checked'>
-                        <Switch checkedChildren='开启' unCheckedChildren='关闭' />
-                    </Form.Item>
-                    <div className='paddh flex flex_end paddb20'>
-                        <Button type='primary' className='huibtn marginr12' onClick={() => reset('local')}>重置</Button>
-                        <Button type='primary' htmlType='submit'>保存</Button>
-                    </div>
-                </Form>
-            </div>
-        </div>
+        <Row gutter={[16, 16]} >
+            <Col span={6} xs={24} sm={24} md={24} lg={12} xl={12} xxl={6}>
+                <div className=' bgbai '>
+                    <Title title='七牛云配置' />
+                    <Form
+                        autoComplete='off'
+                        labelCol={{ flex: '70px' }}
+                        onFinish={onFinish}
+                        ref={qnFormRef}
+                        initialValues={{
+                            qiniu: info.qiniu,
+                        }}
+                    >
+                        <Form.Item label='AK' name={['qiniu', 'AK']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='SK' name={['qiniu', 'SK']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='仓库名称' name={['qiniu', 'bucket']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='七牛域名' name={['qiniu', 'domain']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='使用状态' name={['qiniu', 'visible']} className='paddh' valuePropName='checked'>
+                            <Switch checkedChildren='开启' unCheckedChildren='关闭' />
+                        </Form.Item>
+                        <div className='paddh flex flex_end paddb20' style={{ marginTop: 80 }}>
+                            <Button type='primary' className='huibtn marginr12' onClick={() => reset('qiniu')}>重置</Button>
+                            <Button type='primary' htmlType='submit'>保存</Button>
+                        </div>
+                    </Form>
+                </div>
+            </Col>
+            <Col span={6} xs={24} sm={24} md={24} lg={12} xl={12} xxl={6}>
+                <div className=' bgbai '>
+                    <Title title='阿里OSS配置' />
+                    <Form
+                        autoComplete='off'
+                        labelCol={{ flex: '100px' }}
+                        ref={aliFormRef}
+                        name='alioss'
+                        onFinish={onFinish}
+                    >
+                        <Form.Item label='AccessKeyID' name={['alioss', 'ak']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='AccessKey' name={['alioss', 'sk']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='仓库名称' name={['alioss', 'bucket']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='endpoint' name={['alioss', 'endpoint']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='自定义域名' name={['alioss', 'domain']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='使用状态' name={['alioss', 'visible']} className='paddh' valuePropName='checked'>
+                            <Switch checkedChildren='开启' unCheckedChildren='关闭' />
+                        </Form.Item>
+                        <div className='paddh flex flex_end paddb20'>
+                            <Button type='primary' className='huibtn marginr12' onClick={() => reset('alioss')}>重置</Button>
+                            <Button type='primary' htmlType='submit'>保存</Button>
+                        </div>
+                    </Form>
+                </div>
+            </Col>
+            <Col span={6}  xs={24} sm={24} md={24} lg={12} xl={12} xxl={6}>
+                <div className=' bgbai'>
+                    <Title title='腾讯云配置' />
+                    <Form
+                        autoComplete='off'
+                        labelCol={{ flex: '100px' }}
+                        ref={txFormRef}
+                        onFinish={onFinish}
+                    >
+                        <Form.Item label='AccessKeyID' name={['txcos', 'AK']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='SAccessKeyK' name={['txcos', 'SK']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='仓库名称' name={['txcos', 'bucketName']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='bucket' name={['txcos', 'bucket']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='自定义域名' name={['txcos', 'domain']} className='paddh'>
+                            <Input placeholder='请输入' />
+                        </Form.Item>
+                        <Form.Item label='使用状态' name={['txcos', 'visible']} className='paddh' valuePropName='checked'>
+                            <Switch checkedChildren='开启' unCheckedChildren='关闭' />
+                        </Form.Item>
+                        <div className='paddh flex flex_end paddb20'>
+                            <Button type='primary' className='huibtn marginr12' onClick={() => reset('txcos')}>重置</Button>
+                            <Button type='primary' htmlType='submit'>保存</Button>
+                        </div>
+                    </Form>
+                </div>
+            </Col>
+            <Col span={6} xs={24} sm={24} md={24} lg={12} xl={12} xxl={6}>
+                <div className=' bgbai '>
+                    <Title title='本地配置' />
+                    <Form
+                        autoComplete='off'
+                        ref={localFormRef}
+                        onFinish={onFinish}
+                    >
+                        <Form.Item label='使用状态' name={['local', 'visible']}  className='paddh' valuePropName='checked'>
+                            <Switch checkedChildren='开启' unCheckedChildren='关闭' />
+                        </Form.Item>
+                        <div className='paddh flex flex_end paddb20'>
+                            <Button type='primary' className='huibtn marginr12' onClick={() => reset('local')}>重置</Button>
+                            <Button type='primary' htmlType='submit'>保存</Button>
+                        </div>
+                    </Form>
+                </div>
+            </Col>
+        </Row>
     )
 };
 

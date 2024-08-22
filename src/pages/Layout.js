@@ -8,11 +8,13 @@ import Title from '../component/Title';
 import EditPwd from './system/EditPwd';  //修改密码
 import UserInfo from './system/UserInfo';  //个人信息
 import SetColor from './system/SetColor';  //主题配色
+// import RoleList from "./system/role/RoleList";
 // loading页
 import Loading from './Loading';
 // 路由
 const AdminList = lazy(() => import('./system/admin/AdminList'));  // 管理员列表
 const RoleList = lazy(() => import('./system/role/RoleList'));  //角色列表
+
 const BasicInfo = lazy(() => import('./system/set/BasicInfo'));  // 基本信息配置
 const MenuSet = lazy(() => import('./system/menu/MenuSet'));  // 菜单管理
 const UploadSet = lazy(() => import('./system/UploadSet'));  // 上传设置
@@ -44,7 +46,13 @@ let tabRef = [];
 const list = (path, id) => {
     var MyComponentt = Components[path];
     tabRef[id] = createRef();
-    return <MyComponentt ref={tabRef[id]} />;
+    return(
+        <Suspense fallback={<Loading />}>
+            <div className={"container"}>
+                <MyComponentt ref={tabRef[id]} />
+            </div>
+        </Suspense>
+    );
 }
 
 const Index = () => {
@@ -69,27 +77,28 @@ const Index = () => {
     const [avatar, setAvatar] = useState('');
     const [sysName, setSysName] = useState('鸿鹄科技管理后台');
     // 右侧顶部目录
-    const items = [{
-        key: '1',
-        label: (
-            <p onClick={() => setPwdVisible(true)}>修改密码</p>
-        )
-    }, {
-        key: '2',
-        label: (
-            <p onClick={() => setInfoVisible(true)}>个人信息</p>
-        )
-    }, {
-        key: '3',
-        label: (
-            <p onClick={() => {
-                localStorage.removeItem('honghuToken')
-                message.success('再见', () => {
-                    window.location.href = '';
-                })
-            }}>退出登录</p>
-        )
-    }]
+    const items = [
+        {
+            key: '1',
+            label: (
+                <p onClick={() => setPwdVisible(true)}>修改密码</p>
+            )
+        }, {
+            key: '2',
+            label: (
+                <p onClick={() => setInfoVisible(true)}>个人信息</p>
+            )
+        }, {
+            key: '3',
+            label: (
+                <p onClick={() => {
+                    localStorage.removeItem('honghuToken')
+                    message.success('再见', () => {
+                        window.location.href = '';
+                    })
+                }}>退出登录</p>
+            )
+        }]
     useEffect(() => {
         getData();
         setTimeout(() => {
@@ -106,10 +115,10 @@ const Index = () => {
                 setUsername(res.data.username)
                 setAvatar(res.data.avatar)
                 setInfo(
-                    { 
+                    {
                         avatar: res.data.avatar,
-                         username: res.data.username,
-                          systemName: res.data.name }
+                        username: res.data.username,
+                        systemName: res.data.name }
                 )
                 // let menus = [
                 //     {
@@ -184,6 +193,8 @@ const Index = () => {
                 setMenu(items)
                 // 设置打开的menu
                 setOpenKeys([String(rootSubmenuKeys[0])])
+
+                selectedLabel.children=list(selectedLabel.path,selectedLabel.key)
                 // 设置tab页
                 setTabs([
                     selectedLabel
@@ -202,21 +213,27 @@ const Index = () => {
         // console.log(row)
         if (!row) {
             bsd:
-            for (let i in menu) {
-                let child = menu[i].children;
-                if (child) {
-                    let index = child.findIndex(d => d.key == e.key);
-                    if (index > -1) {
-                        // 设置选中tab
-                        setActiveKey(String(child[index].key))
-                        // 调用tab变化
-                        add({ label: child[index].label, key: String(child[index].key), path: child[index].path });
-                        // 设置内容页
-                        setPath(child[index].path);
-                        break bsd
+                for (let i in menu) {
+                    let child = menu[i].children;
+                    if (child) {
+                        let index = child.findIndex(d => d.key == e.key);
+                        if (index > -1) {
+                            // 设置选中tab
+                            setActiveKey(String(child[index].key))
+                            // 调用tab变化
+                            console.log(child[index])
+                            add({
+                                label: child[index].label,
+                                key: String(child[index].key),
+                                path: child[index].path,
+
+                            });
+                            // 设置内容页
+                            setPath(child[index].path);
+                            break bsd
+                        }
                     }
                 }
-            }
         } else {  // 以及存在且path不为空
             // 设置选择的tab
             setActiveKey(String(row.key))
@@ -263,7 +280,9 @@ const Index = () => {
         if (index > -1) {
 
         } else {
-            setTabs([...tabs, { label: data.label, key: data.key, path: data.path, closable: true, }])
+            setTabs([...tabs, { label: data.label, key: data.key, path: data.path, closable: true,
+                children:list(data.path,data.key)
+            }])
         }
     }
     // 右边顶部tab切换
@@ -291,18 +310,18 @@ const Index = () => {
         }
         // 一级不存在
         bsd:
-        for (let i in menu) {
-            let child = menu[i].children;
-            if (child) {
-                let row = child.find(item => item.key == key);
-                if (row) {
-                    keyPath = [row.key, menu[i].key]
-                    setSelectedKeys(keyPath);  // 设置选中的menu
-                    setOpenKeys([menu[i].key])  // 设置打开的menu
-                    break bsd
+            for (let i in menu) {
+                let child = menu[i].children;
+                if (child) {
+                    let row = child.find(item => item.key == key);
+                    if (row) {
+                        keyPath = [row.key, menu[i].key]
+                        setSelectedKeys(keyPath);  // 设置选中的menu
+                        setOpenKeys([menu[i].key])  // 设置打开的menu
+                        break bsd
+                    }
                 }
             }
-        }
     }
     // 关闭弹出层
     const onCancel = () => {
@@ -342,7 +361,7 @@ const Index = () => {
                 />
             </Sider>
             <Layout className="site-layout">
-                <Header className='headtop' style={{ padding: 0, background: '#fff', height: 90, }}>
+                <Header className='headtop' style={{ padding: 0, background: '#fff', height: 90 }}>
                     <div className='flexCenter margl24' style={{ lineHeight: '54px' }}>
                         <p className={`cursor iconfont ${auto?(collapsedWidth==0 ? 'icon-zhankai' : 'icon-shouqi'):(collapsed ? 'icon-zhankai' : 'icon-shouqi')}`} onClick={() => {
                             // setCollapsed(!collapsed)
@@ -363,7 +382,7 @@ const Index = () => {
                         <img alt='' src={avatar!=""?avatar:require('../static/default.png')} className='avatar' />
                         <Dropdown placement='bottom' menu={{ items }} arrow>
                             <div className='flexCenter cursor' style={{ height: 24, }}>
-                                 <p>{username}</p>
+                                <p>{username}</p>
                                 <span className='iconfont icon-jiantou-shang'></span>
                             </div>
                         </Dropdown>
@@ -379,9 +398,7 @@ const Index = () => {
                         onEdit={onEdit}
                         onChange={onChange}
                     />
-                    <Suspense fallback={<Loading />}>
-                        {path != '' && list(path, activeKey)}
-                    </Suspense>
+
                 </Content>
             </Layout>
             {/* 修改密码 */}
