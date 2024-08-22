@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="stylesheet" href="./font/iconfont.css" />
+  <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+  <title></title>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/three.min.js"></script>
+  <script>
+
+    var SEPARATION = 100, AMOUNTX = 60, AMOUNTY = 40;
+    var container;
+    var camera, scene, renderer;
+    var particles, particle, count = 0;
+    var mouseX = 0, mouseY = 0;
+    var windowHalfX = window.innerWidth / 2;
+    var windowHalfY = window.innerHeight / 2;
+
+    $(function () {
+      // init();		//初始化
+      // animate();	//动画效果
+    });
+    function delDom() {
+      let canboxDom = document.getElementById('canbox');
+      if (canboxDom) {
+        canboxDom.remove()
+      }
+      console.log('删除')
+    }
+    function reset() {
+      init();		//初始化
+      animate();	//动画效果
+    }
+
+    //初始化
+    function init() {
+
+      container = document.createElement('div');	//创建容器
+      container.id = 'canbox'
+      container.style = "background-image: url('./bigbg.png');background-size: 100% 100%;background-color: #040F1D;"
+      document.body.appendChild(container);			//将容器添加到页面上
+      camera = new THREE.PerspectiveCamera(120, window.innerWidth / window.innerHeight, 1, 1500);		//创建透视相机设置相机角度大小等
+      camera.position.set(0, 450, 2000);		//设置相机位置
+
+      scene = new THREE.Scene();			//创建场景
+      particles = new Array();
+
+      var PI2 = Math.PI * 2;
+      //设置粒子的大小，颜色位置等
+      var material = new THREE.ParticleCanvasMaterial({
+        color: 0x047d8c,
+        vertexColors: true,
+        size: 4,
+        program: function (context) {
+          context.beginPath();
+          context.arc(0, 0, 0.01, 0, PI2, true);	//画一个圆形。此处可修改大小。
+          context.fill();
+        }
+      });
+      //设置长条粒子的大小颜色长度等
+      var materialY = new THREE.ParticleCanvasMaterial({
+        color: 0xffffff,
+        vertexColors: true,
+        size: 1,
+        program: function (context) {
+
+          context.beginPath();
+          //绘制渐变色的矩形
+          var lGrd = context.createLinearGradient(-0.008, 0.25, 0.016, -0.25);
+          lGrd.addColorStop(0, '#047d8c');
+          lGrd.addColorStop(1, 'rgba(4,78,98,.2)');
+          context.fillStyle = lGrd;
+          context.fillRect(-0.008, 0.25, 0.016, -0.25);  //注意此处的坐标大小
+          //绘制底部和顶部圆圈
+          context.fillStyle = "#0090ff";
+          context.arc(0, 0, 0.008, 0, PI2, true);    //绘制底部圆圈
+          context.fillStyle = "#00ffff";
+          context.arc(0, 0.25, 0.008, 0, PI2, true);    //绘制顶部圆圈
+          context.fill();
+          context.closePath();
+          //绘制顶部渐变色光圈
+          var rGrd = context.createRadialGradient(0, 0.25, 0, 0, 0.25, 0.025);
+          rGrd.addColorStop(0, 'transparent');
+          rGrd.addColorStop(1, '#00ffff');
+          context.fillStyle = rGrd;
+          context.arc(0, 0.25, 0.025, 0, PI2, true);    //绘制一个圆圈
+          context.fill();
+
+        }
+      });
+
+      //循环判断创建随机数选择创建粒子或者粒子条
+      var i = 0;
+      for (var ix = 0; ix < AMOUNTX; ix++) {
+        for (var iy = 0; iy < AMOUNTY; iy++) {
+          var num = Math.random() - 0.1;
+          if (num > 0) {
+            particle = particles[i++] = new THREE.Particle(material);
+            // console.log("material")
+          }
+          else {
+            particle = particles[i++] = new THREE.Particle(materialY);
+            // console.log("materialY")
+          }
+          //particle = particles[ i ++ ] = new THREE.Particle( material );
+          particle.position.x = ix * SEPARATION - ((AMOUNTX * SEPARATION) / 2);
+          particle.position.z = iy * SEPARATION - ((AMOUNTY * SEPARATION) / 2);
+          scene.add(particle);
+        }
+      }
+
+      renderer = new THREE.CanvasRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(renderer.domElement);
+      //document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+      //document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+      //document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+      window.addEventListener('resize', onWindowResize, false);
+    }
+
+    //浏览器大小改变时重新渲染
+    function onWindowResize() {
+      windowHalfX = window.innerWidth / 2;
+      windowHalfY = window.innerHeight / 2;
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      render();
+    }
+
+    //将相机和场景渲染到页面上
+    function render() {
+      var i = 0;
+      //更新粒子的位置和大小
+      for (var ix = 0; ix < AMOUNTX; ix++) {
+        for (var iy = 0; iy < AMOUNTY; iy++) {
+          particle = particles[i++];
+          //更新粒子位置
+          particle.position.y = (Math.sin((ix + count) * 0.3) * 50) + (Math.sin((iy + count) * 0.5) * 50);
+          //更新粒子大小
+          particle.scale.x = particle.scale.y = particle.scale.z = ((Math.sin((ix + count) * 0.3) + 1) * 4 + (Math.sin((iy + count) * 0.5) + 1) * 4) * 50;	//正常情况下再放大100倍*1200
+        }
+      }
+
+      renderer.render(scene, camera);
+      count += 0.1;
+    }
+  </script>
+  <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+</body>
+
+</html>
