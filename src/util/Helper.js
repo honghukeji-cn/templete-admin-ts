@@ -107,4 +107,38 @@ export default class Helper {
 	static showModal(){
 		return(<div style={{width:100,height:100,background:"red"}}></div>);
 	}
+
+	static getRandomString(length) {
+		var result = '';
+		var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		var charactersLength = characters.length;
+		for (var i = 0; i < length; i++) {
+			result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		}
+		return result;
+	}
+	static str2fileList(str)
+	{
+		var imgs=str.split(",");
+		var fileList=[];
+		for(var i=0;i<imgs.length;i++)
+		{
+			fileList.push({
+				uid:this.getRandomString(12),
+				name:this.getRandomString(6),
+				url:imgs[i],
+				thumbUrl:imgs[i],
+				status:"done"
+			})
+		}
+		return fileList;
+	}
+	static fileList2str(fileList){
+		var imgs=[];
+		for(var i=0;i<fileList.length;i++)
+		{
+			imgs.push(fileList[i].url)
+		}
+		return imgs.join(",")
+	}
 }

@@ -27,12 +27,14 @@ const Index = (_props: any, ref: any) => {
             {
                 value=value.split(",")
             }
-            formRef.current.setFieldsValue({
-                type: _props.data.type,
-                title: _props.data.title,
-                value,
-                canDel: _props.data.canDel == 1 ? true : false,
-            })
+            setTimeout(()=>{
+                formRef.current.setFieldsValue({
+                    type: _props.data.type,
+                    title: _props.data.title,
+                    value,
+                    canDel: _props.data.canDel == 1 ? true : false,
+                })
+            },1000)
             if (_props.data.type == 4) {
                 // setTimeout(() => {
                 //     editRef.current.setContent(value)
@@ -68,7 +70,7 @@ const Index = (_props: any, ref: any) => {
     const onFinish = (data: any) => {
         setLoading(true)
         if (data.type === 4) {
-            data.value = data.value.toHTML();
+            // data.value = data.value.toHTML();
         } else if (data.type === 5) {
             data.value = data.value ? 1 : 0;
         }else if(data.type===3)
@@ -142,6 +144,7 @@ const Index = (_props: any, ref: any) => {
                             </React.Fragment>
                         )}
                     </Form.Item>
+
                 </div>
                 <Button loading={loading} type="primary" htmlType='submit' className='marglauto block margt20'>确定</Button>
             </Form>

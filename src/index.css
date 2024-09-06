@@ -12,6 +12,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.container{
+  height: calc(100vh - 138px);
+}
 /* 清除table样式 */
 .ant-table-wrapper>div,.ant-table-wrapper>div>.ant-spin-container{height: 100%;}
 .ant-table{height: calc(100% - 64px);overflow: hidden;}
