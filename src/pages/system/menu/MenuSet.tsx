@@ -3,7 +3,8 @@ import { Button, Pagination, Switch, App, theme } from 'antd';
 import Title from '../../../component/Title';
 import CustomModal from '../../../component/CustomerModal';
 import * as req from '../../../util/request';
-import AddMenu from './AddMenu';  // 添加、编辑菜单
+import AddMenu from './AddMenu';
+import SearchView from "../../../component/SearchView";  // 添加、编辑菜单
 
 const levelTxt = ['', '一级菜单', '二级菜单', '三级菜单']
 
@@ -193,90 +194,86 @@ const Index = (_props: any, ref: any) => {
 	}
 	return (
 		<React.Fragment>
-			<div className='h100 flexColumn'>
-				<div className='flwp'>
-					<Button type="primary" onClick={() => {
-						setRow({ pid: 0 });
-						setLevel(1);
-						setType('add');
-						setOpen(true);
-					}}>添加菜单</Button>
+			<Title title='菜单管理' />
+			<SearchView
+			buttons={[<Button type="primary" onClick={() => {
+				setRow({ pid: 0 });
+				setLevel(1);
+				setType('add');
+				setOpen(true);
+			}}>添加菜单</Button>]}
+			/>
+			{/* 菜单列表 */}
+			<div className='pubList margl24 margr24 menuListbox customScrollbar'>
+				<div className='head flex'>
+					<p className='flexAllCenter cursor' style={{ width: 90 }}>
+						序号
+					</p>
+					<p className='row2'>菜单名称</p>
+					<p className='rowFlex'>前端路由</p>
+					<p className='rowFlex'>后端路由</p>
+					<p className='row15'>菜单等级</p>
+					<p className='rowFlex'>打印日志</p>
+					<p className='rowFlex'>显示状态</p>
+					<p className='row2'>操作</p>
 				</div>
-				<div className='bgbai margt20 flex_auto'>
-					<Title title='菜单管理' />
-					{/* 菜单列表 */}
-					<div className='pubList margl24 margr24 menuListbox customScrollbar'>
-						<div className='head flex'>
-							<p className='flexAllCenter cursor' style={{ width: 90 }}>
-								序号
-							</p>
-							<p className='row2'>菜单名称</p>
-							<p className='rowFlex'>前端路由</p>
-							<p className='rowFlex'>后端路由</p>
-							<p className='row15'>菜单等级</p>
-							<p className='rowFlex'>打印日志</p>
-							<p className='rowFlex'>显示状态</p>
-							<p className='row2'>操作</p>
-						</div>
-						{list.map((item, index) => (
-							<div key={String(index)}>
-								{/* 一级 */}
-								<div className='flex'>
-									<p className='flexAllCenter cursor' style={{ width: 90 }}>{index + 1}</p>
-									<div className='row2 flexCenter paddleft98'>
-										{item.child.length > 0 && <span className={`iconfont icon-jiantou-shang sjx ${item.open ? 'xia' : ''}`} onClick={() => openMenu(index)}></span>}
-										<span className={`iconfont ${item.icon}`} style={{ marginLeft: item.child.length === 0 ? 16 : '', }}></span>
-										<p className='zii'>{item.name}</p>
-									</div>
-									{getTxt(item)}
-								</div>
-								{item.child && item.child.length > 0 && <React.Fragment>
-									{item.child.map((row: any, k: number) => (
-										<div key={String(k)} className={`sec ${item.open ? 'open' : ''}`} style={{ height: row.open && item.open && (row.child.length + 1) * 54 }}>
-											{/* 二级 */}
-											<div className='flex'>
-												<p className='flexAllCenter cursor' style={{ width: 90 }}>{k + 1}</p>
-												<div className='row2 flexCenter paddleft98'>
-													{row.child.length > 0 && <span className={`iconfont icon-jiantou-shang sjx ${row.open ? 'xia' : ''}`} onClick={() => openMenu(index, k)} style={{ marginLeft: row.child.length > 0 ? 20 : '' }}></span>}
-													<span className={`iconfont icon-wenjian`} style={{ marginLeft: row.child.length === 0 ? 36 : '', }}></span>
-													<p className='zii'>{row.name}</p>
-												</div>
-												{getTxt(row)}
-											</div>
-											{row.child && <div className={`three ${row.open ? 'open' : ''}`} style={{ height: row.open ? row.child.length * 54 : '0' }}>
-												{row.child.map((r: any, i: number) => (
-													<div className='flex' key={String(i)}>
-														<p className='flexAllCenter cursor' style={{ width: 90 }}>{i + 1}</p>
-														<div className='row2 flexCenter paddleft98'>
-															{r.child.length > 0 && <span className={`iconfont icon-jiantou-shang sjx ${r.open ? 'xia' : ''}`} onClick={() => openMenu(index, k, i)}></span>}
-															<span className={`iconfont icon-wenjian`} style={{ marginLeft: r.child.length === 0 ? 56 : '', }}></span>
-															<p className='zii'>{r.name}</p>
-														</div>
-														{getTxt(r, item.id)}
-													</div>
-												))}
-											</div>}
-										</div>
-									))}
-								</React.Fragment>}
+				{list.map((item, index) => (
+					<div key={String(index)}>
+						{/* 一级 */}
+						<div className='flex'>
+							<p className='flexAllCenter cursor' style={{ width: 90 }}>{index + 1}</p>
+							<div className='row2 flexCenter paddleft98'>
+								{item.child.length > 0 && <span className={`iconfont icon-jiantou-shang sjx ${item.open ? 'xia' : ''}`} onClick={() => openMenu(index)}></span>}
+								<span className={`iconfont ${item.icon}`} style={{ marginLeft: item.child.length === 0 ? 16 : '', }}></span>
+								<p className='zii'>{item.name}</p>
 							</div>
-						))}
+							{getTxt(item)}
+						</div>
+						{item.child && item.child.length > 0 && <React.Fragment>
+							{item.child.map((row: any, k: number) => (
+								<div key={String(k)} className={`sec ${item.open ? 'open' : ''}`} style={{ height: row.open && item.open && (row.child.length + 1) * 54 }}>
+									{/* 二级 */}
+									<div className='flex'>
+										<p className='flexAllCenter cursor' style={{ width: 90 }}>{k + 1}</p>
+										<div className='row2 flexCenter paddleft98'>
+											{row.child.length > 0 && <span className={`iconfont icon-jiantou-shang sjx ${row.open ? 'xia' : ''}`} onClick={() => openMenu(index, k)} style={{ marginLeft: row.child.length > 0 ? 20 : '' }}></span>}
+											<span className={`iconfont icon-wenjian`} style={{ marginLeft: row.child.length === 0 ? 36 : '', }}></span>
+											<p className='zii'>{row.name}</p>
+										</div>
+										{getTxt(row)}
+									</div>
+									{row.child && <div className={`three ${row.open ? 'open' : ''}`} style={{ height: row.open ? row.child.length * 54 : '0' }}>
+										{row.child.map((r: any, i: number) => (
+											<div className='flex' key={String(i)}>
+												<p className='flexAllCenter cursor' style={{ width: 90 }}>{i + 1}</p>
+												<div className='row2 flexCenter paddleft98'>
+													{r.child.length > 0 && <span className={`iconfont icon-jiantou-shang sjx ${r.open ? 'xia' : ''}`} onClick={() => openMenu(index, k, i)}></span>}
+													<span className={`iconfont icon-wenjian`} style={{ marginLeft: r.child.length === 0 ? 56 : '', }}></span>
+													<p className='zii'>{r.name}</p>
+												</div>
+												{getTxt(r, item.id)}
+											</div>
+										))}
+									</div>}
+								</div>
+							))}
+						</React.Fragment>}
 					</div>
-					{/* 页码 */}
-					<Pagination
-						current={page}
-						total={total}
-						showTotal={(total, range) => {
-							return `共${total}条记录，本页展示${range[0]}-${range[1]}条记录`
-						}}
-						showSizeChanger={false}
-						onChange={(page) => {
-							setPage(page)
-						}}
-						className='margl24 margr24 margt10'
-					/>
-				</div>
+				))}
 			</div>
+			{/* 页码 */}
+			<Pagination
+				current={page}
+				total={total}
+				showTotal={(total, range) => {
+					return `共${total}条记录，本页展示${range[0]}-${range[1]}条记录`
+				}}
+				showSizeChanger={false}
+				onChange={(page) => {
+					setPage(page)
+				}}
+				className='margl24 margr24 margt10'
+			/>
 			{/* 添加、编辑菜单 */}
 			<CustomModal
 				open={open}

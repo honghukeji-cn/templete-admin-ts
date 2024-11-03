@@ -6,7 +6,7 @@ interface CusotmerSelectProps extends SelectProps{
     type:SelectType;
 
 }
-const CustomerSelect=(props:CusotmerSelectProps)=>{
+const CustomerSelect=(props:CusotmerSelectProps,ref:any)=>{
     const [options,setOptions]=useState<any>([]);
     const [url,setUrl]=useState<string>("")
     useEffect(()=>{

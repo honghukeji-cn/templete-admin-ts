@@ -1,5 +1,5 @@
 import React, { createRef, useEffect, useState, lazy, Suspense } from 'react';
-import { Layout, Menu, Dropdown, Tabs, App, theme } from 'antd';
+import {Layout, Menu, Dropdown, Tabs, App, theme, Modal} from 'antd';
 import * as req from '../util/request';
 import CustomModal from '../component/CustomerModal';
 import Title from '../component/Title';
@@ -11,6 +11,7 @@ import SetColor from './system/SetColor';  //主题配色
 // import RoleList from "./system/role/RoleList";
 // loading页
 import Loading from './Loading';
+import Page404 from "./Page404";
 // 路由
 const AdminList = lazy(() => import('./system/admin/AdminList'));  // 管理员列表
 const RoleList = lazy(() => import('./system/role/RoleList'));  //角色列表
@@ -19,7 +20,8 @@ const BasicInfo = lazy(() => import('./system/set/BasicInfo'));  // 基本信息
 const MenuSet = lazy(() => import('./system/menu/MenuSet'));  // 菜单管理
 const UploadSet = lazy(() => import('./system/UploadSet'));  // 上传设置
 const OperationLog = lazy(() => import('./system/OperationLog'));  // 操作日志
-
+const AuthConfig = lazy(() => import('./system/AuthConfig'));  // 安全控制
+const DbBackUp = lazy(() => import('./system/DbBackUp'));  // 数据库备份列表
 function getItem(label, key, path, icon, children, type) {
     return {
         key,
@@ -41,6 +43,8 @@ const Components = {
     "MenuSet": MenuSet,
     "UploadSet": UploadSet,
     "OperationLog": OperationLog,
+    "AuthConfig": AuthConfig,
+    "DbBackUp":DbBackUp
 }
 let tabRef = [];
 const list = (path, id) => {
@@ -51,7 +55,7 @@ const list = (path, id) => {
     tabRef[id] = createRef();
     return(
         <Suspense fallback={<Loading />}>
-            <div className={"container"}>
+            <div className="container bgbai ">
                 <MyComponentt ref={tabRef[id]} />
             </div>
         </Suspense>
@@ -79,6 +83,7 @@ const Index = () => {
     const [username, setUsername] = useState('');
     const [avatar, setAvatar] = useState('');
     const [sysName, setSysName] = useState('鸿鹄科技管理后台');
+    const [changePwdType,setChangePwdType]=useState(0);//修改密码的级别 0不提示 1警告 2强制
     // 右侧顶部目录
     const items = [
         {
@@ -123,6 +128,21 @@ const Index = () => {
                         username: res.data.username,
                         systemName: res.data.name }
                 )
+                setChangePwdType(res.data.change_pwd_type);
+                if(res.data.change_pwd_type>0)
+                {
+                    Modal.confirm({
+                        title:"警告",
+                        content:res.data.change_pwd_tip,
+                        cancelText:"稍后再说",
+                        okText:"立即修改",
+                        cancelButtonProps:{disabled:res.data.change_pwd_type==2},
+                        onOk:()=>{
+                            setPwdVisible(true)
+                        }
+                    })
+                }
+
                 // let menus = [
                 //     {
                 //         id: 1, title: '基本管理', path: '', icon: 'icon-yonghu', child: [
@@ -391,7 +411,7 @@ const Index = () => {
                         </Dropdown>
                     </div>
                 </Header>
-                <Content style={{ padding: 24 }}>
+                <Content style={{ padding: 5 ,overflowY:"scroll",overflowX:"hidden"}} >
                     <Tabs
                         className='asdTabs'
                         items={tabs}
@@ -410,6 +430,8 @@ const Index = () => {
                 title={(<Title title='修改密码' />)}
                 width={360}
                 onCancel={onCancel}
+                closable={changePwdType<2}
+                maskClosable={changePwdType<2}
             >
                 <EditPwd />
             </CustomModal>

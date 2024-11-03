@@ -74,7 +74,8 @@ export default class Index extends React.Component {
                     pageSize: this.state.size,
                     current: this.state.page,
                     total: this.state.total,
-                    showSizeChanger: false,
+                    showSizeChanger: true,
+
                     showTotal: (total, range) => {
                         var num = range[0],
                             num1 = range[1]
@@ -85,6 +86,7 @@ export default class Index extends React.Component {
                 }}
                 dataSource={this.state.data}
                 onChange={(page, filters, sorter) => {
+                    console.log("这里触发不",page)
                     var orderBy = "";
                     if (sorter.order) {
                         if (sorter.order == "ascend") {
@@ -96,12 +98,13 @@ export default class Index extends React.Component {
 
                     this.setState({
                         page: page.current || 1,
+                        size:page.pageSize || 10,
                         orderBy
                     }, () => {
                         this.getList();
                     })
                 }}
-                scroll={{ y: window.innerHeight - 368,x:1000 }}
+                scroll={{x:1000 }}
                 {...this.props}
             />
         );

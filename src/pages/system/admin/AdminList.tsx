@@ -1,11 +1,13 @@
 import React, { useImperativeHandle, forwardRef, useRef, useState,useEffect } from 'react';
-import { Button, Input, theme, App } from 'antd';
+import {Button, Input, theme, App, Form, Row, Col, Space, Tooltip, Modal} from 'antd';
 import Title from '../../../component/Title';
 import CustomTable from '../../../component/Table';
 import CustomModal from '../../../component/CustomerModal';
 import CustomerSelect from "../../../component/CustomerSelect";
 import * as req from '../../../util/request';
 import AddAdmin from './AddAdmin';
+import SearchView from "../../../component/SearchView";
+import Text from "../../../component/Text";
 
 const Index = (_props: any, ref: any) => {
 	const {
@@ -16,8 +18,7 @@ const Index = (_props: any, ref: any) => {
 	const [open, setOpen] = useState<boolean>(false);
 	const [row, setRow] = useState<{ id?: number, role_name?: string, describe?: string, ids?: [] }>({});
 	const [type, setType] = useState<string>('');
-	const [role_id, setRoleId] = useState<string>('');
-	const [username, setWords] = useState<string>('');
+	const [search,setSearch]=useState<any>({});
 	// 列表
 	const columns = [
 		{
@@ -31,6 +32,11 @@ const Index = (_props: any, ref: any) => {
 			width: 120,
 			dataIndex: 'username'
 		}, {
+			title: '角色',
+			align: 'center',
+			width: 120,
+			dataIndex: 'role_name'
+		}, {
 			title: '上次登录时间',
 			align: 'center',
 			dataIndex: 'last_login_time',
@@ -43,10 +49,49 @@ const Index = (_props: any, ref: any) => {
 			dataIndex: 'last_login_ip',
 			render: (ip: string) => `${ip || '-'}`
 		}, {
-			title: '角色',
+			title: '状态',
 			align: 'center',
 			width: 120,
-			dataIndex: 'role_name'
+			dataIndex: 'status',
+			render:(status:number,item:any)=>{
+				return(
+					<Tooltip title={"点击"+(status==0?"解冻":"冻结")+"用户"}>
+						<Text onClick={()=>{
+							Modal.confirm({
+								title:"提示",
+								content:"确定要"+(status==0?"解冻":"冻结")+"该用户吗?",
+								onOk:()=>{
+									// return new Promise<void>(resolve => {
+									// 	req.post('device/delDevice', { id }).then(res => {
+									// 		resolve()
+									// 		if (res.code == 1) {
+									// 			message.success(res.msg);
+									// 			refresh()
+									// 		} else {
+									// 			message.error(res.msg, 1.2);
+									// 		}
+									// 	})
+									// });
+									return new Promise<void>(resolve => {
+										req.post('admin/changeAdminStatus/'+item.admin_id, {  }).then((res:any) => {
+											resolve();
+											if (res.code == 1) {
+												refresh()
+											} else {
+												message.error(res.msg, 1.2);
+											}
+										}).catch((err)=>{
+											console.log(err)
+											message.error(err.toString(), 1.2);
+											resolve()
+										})
+									})
+								}
+							})
+						}}  className={"cursor"} type={status==0?"error":"primary"}>{status==0?"冻结":"正常"}</Text>
+					</Tooltip>
+				);
+			}
 		}, {
 			title: '添加时间',
 			align: 'center',
@@ -71,7 +116,7 @@ const Index = (_props: any, ref: any) => {
 	]
 	useEffect(() => {
 		refresh()
-	}, [role_id,username])
+	}, [search])
 	useImperativeHandle(ref, () => ({
 		refresh,
 	}))
@@ -84,8 +129,7 @@ const Index = (_props: any, ref: any) => {
 			page: info.page,
 			size: info.size,
 			orderBy: '',
-			username,
-			role_id,
+			...search
 		}).then(res => {
 			callback(res)
 		})
@@ -117,39 +161,50 @@ const Index = (_props: any, ref: any) => {
 			}
 		})
 	}
+	const onSearch=(data:any)=>{
+
+	}
 	return (
+
 		<React.Fragment>
-			<div className='h100 flexColumn'>
-				<div className='flwp'>
-					<Input
-						className='pubInpt borderbai marginr12'
-						prefix={(<span className='iconfont icon-sousuo marginr4'></span>)}
-						placeholder='请输入'
-						allowClear
-						onChange={(e) => {
-							setWords(e.target.value || '');
-						}}
-					/>
-					<CustomerSelect
-						className='borderbai marginr12'
-						type='allrole'
-						placeholder='请选择角色'
-						onChange={(role_id: string) => setRoleId(role_id || '')}
-					/>
+
+
+			<Title title='管理员列表' />
+			<SearchView
+				onSearch={(data:any)=>{
+					setSearch(data)
+				}}
+				items={[
+					{
+						node:<Input
+								placeholder='请输入'
+								allowClear
+							/>,
+						label:"用户名",
+						name:"name"
+					},
+					{
+						node:<CustomerSelect
+								type='allrole'
+								placeholder='请选择角色'
+							/>,
+						label:"角色",
+						name:"role_id"
+					},
+				]}
+				buttons={[
 					<Button type="primary" onClick={() => {
 						setOpen(true);
 					}}>添加管理员</Button>
-				</div>
-				<div className='bgbai margt20 flex_auto'>
-					<Title title='角色列表' />
-					<CustomTable
-						ref={tableRef}
-						columns={columns}
-						onRefresh={onRefresh}
-						scroll={{ y: window.innerHeight - 368,x:1010 }}
-					/>
-				</div>
-			</div>
+				]}
+			/>
+			<CustomTable
+				ref={tableRef}
+				columns={columns}
+				onRefresh={onRefresh}
+
+				scroll={{ x:1010 }}
+			/>
 			{/* 添加/编辑 */}
 			<CustomModal
 				open={open}

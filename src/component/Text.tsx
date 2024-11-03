@@ -5,7 +5,7 @@ interface TextProps extends React.ParamHTMLAttributes<any>{
     type?:string;
     children:ReactNode,
 }
-const Text = (_props: TextProps) => {
+const Text = (_props: TextProps,ref:any) => {
     const {
         token: { colorPrimary, colorSuccess, colorWarning, colorError }
     } = theme.useToken();

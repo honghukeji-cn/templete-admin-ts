@@ -13,7 +13,21 @@ code {
     monospace;
 }
 .container{
-  height: calc(100vh - 138px);
+  min-height: calc(100vh - 100px);
+  padding-bottom: 20px;
+}
+.searchView{
+  background-color: rgba(0,0,0,0.02);
+  padding: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.searchView .ant-col{
+  height: auto;
+  /*background-color: red;*/
+}
+.uploadSetItem{
+  background-color: rgba(0,0,0,0.02);
 }
 /* 清除table样式 */
 .ant-table-wrapper>div,.ant-table-wrapper>div>.ant-spin-container{height: 100%;}
@@ -59,6 +73,7 @@ code {
 .paddh{padding-left: 24px;padding-right: 24px;}
 .paddh12{padding-left: 12px;padding-right: 12px;}
 .paddv12{padding-top: 12px;padding-bottom: 12px;}
+
 .flex{display: flex;align-items: self-start;}
 .flexCenter{display: flex;align-items: center;}
 .flexAllCenter{display: flex;align-items: center;justify-content: center;}
@@ -261,3 +276,5 @@ code {
 .uploadBox{height: 100%;align-content: flex-start;overflow: auto;}
 .uploadBox::-webkit-scrollbar{display: none;}
 .addImgBtn{width: 80px;height: 80px}
+
+

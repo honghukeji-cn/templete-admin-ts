@@ -3,7 +3,7 @@ import { theme } from 'antd';
 interface TitleProps {
     title:string;
 }
-const Title = (props:TitleProps) => {
+const Title = (props:TitleProps,ref:any) => {
     const {
         token: { colorPrimary },
     } = theme.useToken();

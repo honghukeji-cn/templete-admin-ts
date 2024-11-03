@@ -141,4 +141,30 @@ export default class Helper {
 		}
 		return imgs.join(",")
 	}
+
+	static regCheck(regRule,value){
+
+		var reg=new RegExp(regRule);
+		console.log(reg,value)
+		if(!value){
+			return false;
+		}
+		return reg.test(value);
+	}
+
+	static getFileSize(size){
+		if(size<1024*1024)
+		{
+			//1M以内
+			size=(size/1024).toFixed(2)+"K";
+		}else if(size<1024*1024*1024)
+		{
+			//1G内
+			size=(size/(1024*1024)).toFixed(2)+"M";
+		}else{
+			//G
+			size=(size/(1024*1024*1024)).toFixed(2)+"G";
+		}
+		return size;
+	}
 }

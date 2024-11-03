@@ -110,9 +110,10 @@ const Index = (_props: any, ref: any) => {
         }
     }
     return (
+        <div className={"uploadSetItem container"}>
         <Row gutter={[16, 16]} >
             <Col span={6} xs={24} sm={24} md={24} lg={12} xl={12} xxl={6}>
-                <div className=' bgbai '>
+                <div className=' bgbai  '>
                     <Title title='七牛云配置' />
                     <Form
                         autoComplete='off'
@@ -146,7 +147,7 @@ const Index = (_props: any, ref: any) => {
                 </div>
             </Col>
             <Col span={6} xs={24} sm={24} md={24} lg={12} xl={12} xxl={6}>
-                <div className=' bgbai '>
+                <div className=' bgbai uploadSetItem'>
                     <Title title='阿里OSS配置' />
                     <Form
                         autoComplete='off'
@@ -181,7 +182,7 @@ const Index = (_props: any, ref: any) => {
                 </div>
             </Col>
             <Col span={6}  xs={24} sm={24} md={24} lg={12} xl={12} xxl={6}>
-                <div className=' bgbai'>
+                <div className=' bgbai uploadSetItem' >
                     <Title title='腾讯云配置' />
                     <Form
                         autoComplete='off'
@@ -215,7 +216,7 @@ const Index = (_props: any, ref: any) => {
                 </div>
             </Col>
             <Col span={6} xs={24} sm={24} md={24} lg={12} xl={12} xxl={6}>
-                <div className=' bgbai '>
+                <div className=' bgbai uploadSetItem'>
                     <Title title='本地配置' />
                     <Form
                         autoComplete='off'
@@ -233,6 +234,7 @@ const Index = (_props: any, ref: any) => {
                 </div>
             </Col>
         </Row>
+        </div>
     )
 };
 

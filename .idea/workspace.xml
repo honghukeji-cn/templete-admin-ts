@@ -2,7 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28e8e385-64bc-4239-aa17-1fb0fc5d2f43" name="Default Changelist" comment="修复图片上传和富文本框">
+      <change afterPath="$PROJECT_DIR$/src/component/SearchView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/system/AuthConfig.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/system/DbBackUp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.production" beforeDir="false" afterPath="$PROJECT_DIR$/.env.production" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/CustomerSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/CustomerSelect.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Table.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Text.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Text.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Title.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Title.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/auth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/system/EditPwd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/EditPwd.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/system/OperationLog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/OperationLog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/system/UploadSet.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/UploadSet.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/system/admin/AdminList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/admin/AdminList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/system/menu/MenuSet.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/menu/MenuSet.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/system/role/RoleList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/role/RoleList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/system/set/BasicInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/set/BasicInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/Helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Helper.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,6 +93,14 @@
       <workItem from="1724343400150" duration="82000" />
       <workItem from="1724344805078" duration="65000" />
       <workItem from="1725719329749" duration="818000" />
+      <workItem from="1729650028261" duration="668000" />
+      <workItem from="1730286289396" duration="2595000" />
+      <workItem from="1730298519153" duration="694000" />
+      <workItem from="1730339298426" duration="9197000" />
+      <workItem from="1730444609090" duration="11671000" />
+      <workItem from="1730465282003" duration="3889000" />
+      <workItem from="1730520079912" duration="11000" />
+      <workItem from="1730520102579" duration="12750000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1724315054792</created>
@@ -102,7 +130,14 @@
       <option name="project" value="LOCAL" />
       <updated>1725612527652</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="修复图片上传和富文本框">
+      <created>1729650048983</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1729650048983</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,7 +166,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/system/UploadSet.tsx</url>
-          <line>178</line>
+          <line>179</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

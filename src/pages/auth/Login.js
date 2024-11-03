@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, theme,App } from 'antd';
+import {Button, Form, Input, theme, App, Modal} from 'antd';
 import {
     useNavigate,
 } from "react-router-dom";
@@ -42,7 +42,6 @@ const Login = () => {
         })
     }
     const onFinish = (data) => {
-
         setLoading(true);
         data.uuid = uuid;
         req.post('login/login', data).then(res => {
@@ -51,8 +50,20 @@ const Login = () => {
                 message.success("登录成功")
                 navigate('/home', { replace: true, })
             } else {
-                message.error(res.msg);
                 getCodeUrl();
+                var  sub=res.msg.substr(0,5);
+                if(sub=="ALERT")
+                {
+
+                   var str=res.msg.replace("ALERT","");
+                    Modal.confirm({
+                        title: '提示',
+                        content: str
+                    })
+                }else{
+                    message.error(res.msg);
+                }
+
             }
             setLoading(false);
         })

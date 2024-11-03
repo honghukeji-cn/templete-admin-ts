@@ -1,10 +1,12 @@
 import React, { useImperativeHandle, forwardRef, useState, useEffect, useRef } from 'react';
-import { App, Button, theme } from 'antd';
+import {App, Button, Input, theme} from 'antd';
 import Title from '../../../component/Title';
 import CustomTable from '../../../component/Table';
 import CustomModal from '../../../component/CustomerModal';
 import AddRole from './AddRole';  // 添加/编辑角色
 import * as req from '../../../util/request';
+import CustomerSelect from "../../../component/CustomerSelect";
+import SearchView from "../../../component/SearchView";
 
 const Index = (_props: any, _ref: any) => {
 	const {
@@ -102,22 +104,37 @@ const Index = (_props: any, _ref: any) => {
 	}
 	return (
 		<React.Fragment>
-			<div className='h100 flexColumn'>
-				<div className='flwp'>
+			{/*<div className='h100 flexColumn'>*/}
+			{/*	<div className='flwp'>*/}
+			{/*		<Button type="primary" onClick={() => {*/}
+			{/*			setOpen(true);*/}
+			{/*		}}>添加角色</Button>*/}
+			{/*	</div>*/}
+			{/*	<div className='bgbai margt20 flex_auto'>*/}
+			{/*		<Title title='角色列表' />*/}
+			{/*		<CustomTable*/}
+			{/*			ref={tableRef}*/}
+			{/*			columns={columns}*/}
+			{/*			onRefresh={onRefresh}*/}
+			{/*			scroll={{ y: window.innerHeight - 368,x:710 }}*/}
+			{/*		/>*/}
+			{/*	</div>*/}
+			{/*</div>*/}
+			<Title title='角色列表' />
+			<SearchView
+				buttons={[
 					<Button type="primary" onClick={() => {
 						setOpen(true);
 					}}>添加角色</Button>
-				</div>
-				<div className='bgbai margt20 flex_auto'>
-					<Title title='角色列表' />
-					<CustomTable
-						ref={tableRef}
-						columns={columns}
-						onRefresh={onRefresh}
-						scroll={{ y: window.innerHeight - 368,x:710 }}
-					/>
-				</div>
-			</div>
+				]}
+			/>
+
+			<CustomTable
+				ref={tableRef}
+				columns={columns}
+				onRefresh={onRefresh}
+				scroll={{ y: window.innerHeight - 368,x:710 }}
+			/>
 			{/* 添加/编辑 */}
 			<CustomModal
 				open={open}

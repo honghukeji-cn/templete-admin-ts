@@ -5,6 +5,7 @@ import CustomTable from '../../component/Table';
 import CustomerSelect from "../../component/CustomerSelect";
 import * as req from '../../util/request';
 import Text from '../../component/Text';
+import SearchView from "../../component/SearchView";
 
 const Index = (_props: any, ref: any) => {
     const {
@@ -16,6 +17,7 @@ const Index = (_props: any, ref: any) => {
     const [desc, setDesc] = useState<string>('');
     const [address, setAddress] = useState<string>('');
     const [ip, setIp] = useState<string>('');
+    const [search,setSearch]=useState<any>({});
     // 列表
     const columns = [
         {
@@ -45,7 +47,7 @@ const Index = (_props: any, ref: any) => {
     ]
     useEffect(() => {
         refresh()
-    }, [admin_id, desc, address, ip])
+    }, [search])
     useImperativeHandle(ref, () => ({
         refresh,
     }))
@@ -58,10 +60,7 @@ const Index = (_props: any, ref: any) => {
             page: info.page,
             size: info.size,
             orderBy: '',
-            admin_id,
-            address,
-            ip,
-            desc,
+            ...search
         }).then(res => {
             callback(res)
         })
@@ -72,43 +71,42 @@ const Index = (_props: any, ref: any) => {
     }
     return (
         <React.Fragment>
-            <div className='h100 flexColumn'>
-                <div className='flwp'>
-                    <Input
-                        placeholder='请输入操作内容关键词'
-                        className='pubInpt borderbai marginr12'
-                        onChange={(e) => {
-                            setDesc(e.target.value || '');
-                        }}
-                    />
-                    <CustomerSelect
-                        type="alladmin"
-                        placeholder='请选择操作人'
-                        className='pubSelt marginr12 borderbai'
-                        style={{ width: 160 }}
-                        onChange={(admin_id: string) => {
-                            setAdminId(admin_id || '')
-                        }}
-                    />
-                    <Input
-                        placeholder='请输入操作IP'
-                        prefix={null}
-                        className='pubInpt borderbai marginr12'
-                        onChange={(e) => {
-                            setIp(e.target.value || '');
-                        }}
-                    />
-                </div>
-                <div className='bgbai margt20 flex_auto'>
-                    <Title title='操作日志列表' />
-                    <CustomTable
-                        ref={tableRef}
-                        columns={columns}
-                        onRefresh={onRefresh}
-                        auto={false}
-                    />
-                </div>
-            </div>
+            <Title title='操作日志列表' />
+            <SearchView
+                onSearch={(data:any)=>{
+                    setSearch(data)
+                }}
+                items={[
+                    {
+                        node: <Input
+                            placeholder='请输入操作内容关键词'
+                        />,
+                        label:"操作内容",
+                        name:"desc"
+                    },
+                    {
+                        node: <CustomerSelect
+                            type="alladmin"
+                            placeholder='请选择操作人'
+                        />,
+                        label:"操作人",
+                        name:"admin_id"
+                    },
+                    {
+                        node:  <Input
+                            placeholder='请输入操作IP'
+                        />,
+                        label:"操作IP",
+                        name:"ip"
+                    }
+                ]}
+            />
+            <CustomTable
+                ref={tableRef}
+                columns={columns}
+                onRefresh={onRefresh}
+                auto={false}
+            />
         </React.Fragment>
     )
 };

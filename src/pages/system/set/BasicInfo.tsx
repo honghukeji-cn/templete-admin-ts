@@ -6,6 +6,7 @@ import CustomModal from '../../../component/CustomerModal';
 import AddBasic from './AddBasic';  // 添加配置
 import Text from '../../../component/Text';
 import * as req from '../../../util/request';
+import SearchView from "../../../component/SearchView";
 
 // const typeList = [
 // 	{ value: 1, label: '文本' },
@@ -128,22 +129,19 @@ const Index = (_props: any, ref: any) => {
 	}
 	return (
 		<React.Fragment>
-			<div className='h100 flexColumn'>
-				<div className='flwp'>
-					<Button type="primary" onClick={() => {
-						setOpen(true)
-					}}>添加配置</Button>
-				</div>
-				<div className='bgbai margt20 flex_auto'>
-					<Title title='基本信息配置列表' />
-					<CustomTable
-						ref={tableRef}
-						columns={columns}
-						onRefresh={onRefresh}
+			<Title title='基本信息配置列表' />
+			<SearchView
+			buttons={[<Button type="primary" onClick={() => {
+				setOpen(true)
+			}}>添加配置</Button>]}
+			/>
 
-					/>
-				</div>
-			</div>
+			<CustomTable
+				ref={tableRef}
+				columns={columns}
+				onRefresh={onRefresh}
+
+			/>
 			{/* 添加/编辑 */}
 			<CustomModal
 				open={open}
