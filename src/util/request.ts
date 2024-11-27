@@ -9,7 +9,15 @@ const request = (url: string, config: any) => {
                 // 服务器异常返回  
                 throw Error('接口请求异常');
             }
+            const contentType = res.headers.get('Content-Type');
+            console.log(contentType)
+            if(contentType=="application/octet-stream")
+            {
+                res.headers.get('Content-Disposition');
+                return res.blob();
+            }
             return res.json();
+
         })
         .then((data: any) => {
             if (data.code === 999) {
@@ -21,9 +29,14 @@ const request = (url: string, config: any) => {
                 })
                 return data;
             }
+            if(data.code==888)
+            {
+                message.error(data.msg);
+            }
             return data;
         })
         .catch((error: any) => {
+            console.log(error)
             return Promise.reject(error);
         });
 };

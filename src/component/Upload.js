@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
-import { Upload, App } from 'antd';
+import {Upload, App, Modal} from 'antd';
 import * as req from '../util/request';
 import COS from 'cos-js-sdk-v5';
 import Global from '../util/global';
@@ -143,7 +143,11 @@ const Index = (props, _ref) => {
                     if (type === 4) {  // 上传到本地
                         if(e.file.response.code!=1)
                         {
-                            return message.error("上传失败")
+                            Modal.info({
+                                title:"提示!",
+                                content:e.file.response.msg
+                            })
+                            return;
                         }
                         domain = 4;
                         name = e.file.response.data.name;

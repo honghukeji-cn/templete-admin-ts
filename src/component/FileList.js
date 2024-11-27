@@ -261,6 +261,19 @@ const FileList = (props, _ref) => {
                         }}
                     />
                     <CustomUpload
+                        accept={
+                            props.type==1?"image/*":(
+                                props.type==2?"video/*":(
+                                    props.type==3?".xls,.xlsx":(
+                                        props.type==4?".doc,.docx":(
+                                            props.type==5?".pdf":(
+                                                props.type==6?".zip,.rar":"image/*,video/*,.xls,.xlsx,.doc,.docx,.pdf"
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        }
                         onPercent={(num) => {
                             setPercent(num);
                             if (num >= 100) {

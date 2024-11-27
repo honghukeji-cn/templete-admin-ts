@@ -100,10 +100,7 @@ const Index = () => {
             key: '3',
             label: (
                 <p onClick={() => {
-                    localStorage.removeItem('honghuToken')
-                    message.success('再见', () => {
-                        window.location.href = '';
-                    })
+                   loginOut();
                 }}>退出登录</p>
             )
         }]
@@ -113,6 +110,21 @@ const Index = () => {
             window.delDom && window.delDom()
         }, 2000);
     }, [])
+    //安全退出
+    const loginOut=()=>{
+        req.post('admin/loginOut', {}).then(res => {
+            localStorage.removeItem('honghuToken')
+            message.success('再见', () => {
+                window.location.href = '';
+            })
+        }).catch(e=>{
+            localStorage.removeItem('honghuToken')
+            message.success('再见', () => {
+                window.location.href = '';
+            })
+        })
+
+    }
     // 获取左边导航等数据
     const getData = () => {
         req.post('admin/getLoginInfo', {}).then(res => {

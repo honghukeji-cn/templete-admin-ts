@@ -124,10 +124,10 @@ const Index = (_props: any, ref: any) => {
                             qiniu: info.qiniu,
                         }}
                     >
-                        <Form.Item label='AK' name={['qiniu', 'AK']} className='paddh'>
+                        <Form.Item label='AK' name={['qiniu', 'ak']} className='paddh'>
                             <Input placeholder='请输入' />
                         </Form.Item>
-                        <Form.Item label='SK' name={['qiniu', 'SK']} className='paddh'>
+                        <Form.Item label='SK' name={['qiniu', 'sk']} className='paddh'>
                             <Input placeholder='请输入' />
                         </Form.Item>
                         <Form.Item label='仓库名称' name={['qiniu', 'bucket']} className='paddh'>
@@ -190,10 +190,10 @@ const Index = (_props: any, ref: any) => {
                         ref={txFormRef}
                         onFinish={onFinish}
                     >
-                        <Form.Item label='AccessKeyID' name={['txcos', 'AK']} className='paddh'>
+                        <Form.Item label='AccessKeyID' name={['txcos', 'ak']} className='paddh'>
                             <Input placeholder='请输入' />
                         </Form.Item>
-                        <Form.Item label='SAccessKeyK' name={['txcos', 'SK']} className='paddh'>
+                        <Form.Item label='SAccessKeyK' name={['txcos', 'sk']} className='paddh'>
                             <Input placeholder='请输入' />
                         </Form.Item>
                         <Form.Item label='仓库名称' name={['txcos', 'bucketName']} className='paddh'>

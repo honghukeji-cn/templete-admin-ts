@@ -24,7 +24,7 @@ export default class Index extends React.Component {
         }
     }
     //重载当前页数据
-    getList() {
+     getList() {
         this.setState({
             loading: true
         }, () => {

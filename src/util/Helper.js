@@ -167,4 +167,22 @@ export default class Helper {
 		}
 		return size;
 	}
+
+	static saveAs(data, name) {
+
+		const blob = new Blob([data]);
+
+		const aElement = document.createElement('a');
+
+		const blobUrl = window.URL.createObjectURL(blob);
+
+		aElement.href = blobUrl;
+
+		aElement.download = name;
+
+		aElement.click();
+
+		window.URL.revokeObjectURL(blobUrl);
+
+	}
 }

@@ -57,7 +57,8 @@ const Index = (_props: any, ref: any) => {
             render: (id: number, item: any) => (
                 <div className='flexAllCenter pubbtnbox'>
                     <p style={{ color: colorPrimary }} onClick={() => {
-                        window.open("/admin/backup/download/"+item.id)
+                        xiazai(item)
+                        // window.open("/admin/backup/download/"+item.id)
                     }}>下载</p>
                     <p style={{ color: colorError }} onClick={() => huifu(item)}>恢复</p>
                     <p style={{ color: colorWarning }} onClick={() => del(item)}>删除</p>
@@ -65,6 +66,24 @@ const Index = (_props: any, ref: any) => {
             )
         }
     ]
+
+    const xiazai=(item:any)=>{
+        Modal.confirm({
+            title:"提示",
+            content:"确定要下载该备份文件吗?",
+            onOk:()=>{
+                return new Promise<void>(resolve => {
+                    req.post('backup/download/'+item.id, {  }).then((res:any) => {
+                        resolve();
+                        if(!res.code && res.code!=0)
+                        {
+                            Helper.saveAs(res,item.file_name)
+                        }
+                    })
+                });
+            }
+        })
+    }
     const huifu=(item:any)=>{
         Modal.confirm({
             title:"提示",
@@ -148,7 +167,7 @@ const Index = (_props: any, ref: any) => {
     }
     return (
         <React.Fragment>
-            <Title title='操作日志列表' />
+            <Title title='数据库备份列表' />
             <SearchView
                 onSearch={(data:any)=>{
 
