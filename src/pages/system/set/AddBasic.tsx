@@ -3,7 +3,7 @@ import { App, Button, Form, Input, Select, Switch } from 'antd';
 import FileList from '../../../component/FileList';
 import Helper from '../../../util/Helper';
 import Editor from '../../../component/Editor';
-import * as req from '../../../util/request';
+import  req from '../../../util/request';
 import UploadImg from "../../../component/UploadImg";
 const typeList = [
     { value: 1, label: '文本' },
@@ -85,7 +85,7 @@ const Index = (_props: any, ref: any) => {
             data.canDel = data.canDel ? 1 : 0;
         }
         console.log(data);
-        req.post(url, data).then(res => {
+        req.POST(url, data).then(res => {
             if (res.code == 1) {
                 message.success(res.msg, 1.2)
                 _props.onOk()

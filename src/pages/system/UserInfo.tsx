@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef, useState, useEffect } from 'react';
 import { Button, Form, Input, App } from 'antd';
 import FileList from '../../component/FileList';
-import * as req from '../../util/request';
+import   req from '../../util/request';
 
 interface types {
     value?: string;
@@ -42,7 +42,7 @@ const Index = (_props: any, ref: any) => {
     const onFinish = (data: any) => {
         console.log(data)
         setLoading(true)
-        req.post('admin/editAvatar', data).then(res => {
+        req.POST('admin/editAvatar', data).then(res => {
             if (res.code == 1) {
                 message.success(res.msg, 1.2)
                 _props.onOk()

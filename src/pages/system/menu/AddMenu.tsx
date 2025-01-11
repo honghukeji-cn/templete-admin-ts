@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import { Button, Form, Input, Select, Switch, App } from 'antd';
-import * as req from '../../../util/request';
+import  req from '../../../util/request';
 import icon from './icon.json';
 
 const { Option } = Select;
@@ -19,7 +19,7 @@ const Index = (_props: any, ref: any) => {
     useEffect(() => {
         if (_props.level > 1) {
             console.log(_props.data)
-            getMenus(1, _props.data.sid);
+            getMenus(1, 0);
             if (_props.level > 2) {
                 getMenus(2, _props.data.fid)
             }
@@ -27,7 +27,7 @@ const Index = (_props: any, ref: any) => {
     }, []);
     // 通过pid获取目录
     const getMenus = (type: number, pid: number = 0) => {
-        req.post('menu/getMenusByPid', { pid }).then(res => {
+        req.POST('menu/getMenusByPid', { pid }).then(res => {
             if (res.code === 1) {
                 if (type === 1) {
                     setFirMenu(res.data);
@@ -57,7 +57,7 @@ const Index = (_props: any, ref: any) => {
             url = 'menu/editMenu';
             data.id = _props.data.id;
         }
-        req.post(url, data).then(res => {
+        req.POST(url, data).then(res => {
             if (res.code === 1) {
                 message.success(res.msg, 1.2)
                 _props.onOk && _props.onOk();

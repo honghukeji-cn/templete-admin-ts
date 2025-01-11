@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState, lazy, Suspense } from 'react';
 import {Layout, Menu, Dropdown, Tabs, App, theme, Modal} from 'antd';
-import * as req from '../util/request';
+import   req from '../util/request';
 import CustomModal from '../component/CustomerModal';
 import Title from '../component/Title';
 
@@ -127,7 +127,7 @@ const Index = () => {
     }
     // 获取左边导航等数据
     const getData = () => {
-        req.post('admin/getLoginInfo', {}).then(res => {
+        req.POST('admin/getLoginInfo', {}).then(res => {
             if (res.code == 1) {
                 let items = [];
                 let menus = res.data.menus;

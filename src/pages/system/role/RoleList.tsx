@@ -4,7 +4,7 @@ import Title from '../../../component/Title';
 import CustomTable from '../../../component/Table';
 import CustomModal from '../../../component/CustomerModal';
 import AddRole from './AddRole';  // 添加/编辑角色
-import * as req from '../../../util/request';
+import req from '../../../util/request';
 import CustomerSelect from "../../../component/CustomerSelect";
 import SearchView from "../../../component/SearchView";
 
@@ -67,7 +67,7 @@ const Index = (_props: any, _ref: any) => {
 	}
 	// 获取列表数据
 	const getList = (info: any, callback: any) => {
-		req.post('role/roleList', {
+		req.POST('role/roleList', {
 			page: info.page,
 			size: info.size,
 			orderBy: '',
@@ -92,7 +92,7 @@ const Index = (_props: any, _ref: any) => {
 			centered: true,
 			maskClosable: true,
 			onOk: () => {
-				req.post('role/delRole', { role_id: data.role_id }).then(res => {
+				req.POST('role/delRole', { role_id: data.role_id }).then(res => {
 					if (res.code == 1) {
 						refresh();
 					} else {

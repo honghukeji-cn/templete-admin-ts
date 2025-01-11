@@ -3,7 +3,7 @@ import { Button, Input, theme, App } from 'antd';
 import Title from '../../component/Title';
 import CustomTable from '../../component/Table';
 import CustomerSelect from "../../component/CustomerSelect";
-import * as req from '../../util/request';
+import   req from '../../util/request';
 import Text from '../../component/Text';
 import SearchView from "../../component/SearchView";
 
@@ -56,7 +56,7 @@ const Index = (_props: any, ref: any) => {
     }
     // 获取列表数据
     const getList = (info: any, callback: any) => {
-        req.post('admin/adminLog', {
+        req.POST('admin/adminLog', {
             page: info.page,
             size: info.size,
             orderBy: '',

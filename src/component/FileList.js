@@ -2,7 +2,7 @@ import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'rea
 import { Button, Input, Select, Image, Pagination, Form, App, } from 'antd';
 import CustomModal from './CustomerModal';
 import Title from './Title'
-import * as req from '../util/request';
+import req from '../util/request';
 import CustomUpload from './Upload';
 
 const fileType = [
@@ -107,7 +107,7 @@ const FileList = (props, _ref) => {
             name,
             type: type || '',
         }
-        req.post('setting/getFileList', obj).then(res => {
+        req.POST('setting/getFileList', obj).then(res => {
             if (res.code == 1) {
                 setList(res.data.datas);
                 setTotal(res.data.all);
@@ -189,12 +189,15 @@ const FileList = (props, _ref) => {
             centered: true,
             maskClosable: true,
             onOk: () => {
-                req.post('setting/delFile', { id: data.id }).then(res => {
-                    if (res.code == 1) {
-                        getList();
-                    } else {
-                        message.error(res.msg, 1.2);
-                    }
+                return new Promise((resolve)=>{
+                    req.POST('setting/delFile', { id: data.id }).then(res => {
+                        resolve();
+                        if (res.code == 1) {
+                            getList();
+                        } else {
+                            message.error(res.msg, 1.2);
+                        }
+                    })
                 })
             }
         })
@@ -209,7 +212,7 @@ const FileList = (props, _ref) => {
             url,
             pid
         }
-        req.post('setting/addFile', data).then(res => {
+        req.POST('setting/addFile', data).then(res => {
             if (res.code == 1) {
                 getList();
                 message.success('成功！', 1.2);

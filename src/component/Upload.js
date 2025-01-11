@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
 import {Upload, App, Modal} from 'antd';
-import * as req from '../util/request';
+import  req from '../util/request';
 import COS from 'cos-js-sdk-v5';
 import Global from '../util/global';
 
@@ -18,7 +18,7 @@ const Index = (props, _ref) => {
         initToken()
     }, [])
     function initToken() {
-        req.post('setting/getUploadToken', {}).then(res => {
+        req.POST('setting/getUploadToken', {}).then(res => {
             if (res.code == 1) {
                 let action;
                 if (res.data.visible === 1) {  // 七牛

@@ -3,8 +3,7 @@ import type { FC } from 'react';
 import { Button, Form, Input, App } from 'antd';
 // import CustomSelect from '../../../component/Select';
 import CustomerSelect from "../../../component/CustomerSelect";
-import * as req from '../../../util/request';
-
+ import req from "../../../util/request"
 const Index = (_props: any, ref: any) => {
     const { message } = App.useApp();
     const onFinish = (data: any) => {
@@ -13,7 +12,7 @@ const Index = (_props: any, ref: any) => {
             url = 'admin/editAdmin';
             data.admin_id = _props.data.admin_id;
         }
-        req.post(url, data).then(res => {
+        req.POST(url, data).then(res => {
             if (res.code == 1) {
                 message.success(res.msg, 1.2);
                 _props.onOk && _props.onOk();

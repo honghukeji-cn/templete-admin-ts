@@ -2,7 +2,7 @@ import React, { useImperativeHandle, forwardRef, useRef, useState, useEffect } f
 import { Button, Pagination, Switch, App, theme } from 'antd';
 import Title from '../../../component/Title';
 import CustomModal from '../../../component/CustomerModal';
-import * as req from '../../../util/request';
+import req from '../../../util/request';
 import AddMenu from './AddMenu';
 import SearchView from "../../../component/SearchView";  // 添加、编辑菜单
 
@@ -38,7 +38,7 @@ const Index = (_props: any, ref: any) => {
 			size: 10,
 			orderBy: '',
 		}
-		req.post('menu/menuList', data).then(res => {
+		req.POST('menu/menuList', data).then(res => {
 			if (res.code === 1) {
 				setList(res.data.datas);
 				setTotal(res.data.all);
@@ -68,12 +68,15 @@ const Index = (_props: any, ref: any) => {
 			centered: true,
 			maskClosable: true,
 			onOk: () => {
-				req.post('menu/delMenu', { id: data.id }).then(res => {
-					if (res.code == 1) {
-						getMenu();
-					} else {
-						message.error(res.msg, 1.2);
-					}
+				return new Promise<void>((resolve)=>{
+					req.POST('menu/delMenu', { id: data.id }).then(res => {
+						resolve();
+						if (res.code == 1) {
+							getMenu();
+						} else {
+							message.error(res.msg, 1.2);
+						}
+					})
 				})
 			}
 		})
@@ -114,7 +117,7 @@ const Index = (_props: any, ref: any) => {
 	// 打印日志切换
 	const changeLog = (data: any) => {
 		const { findex, sindex, tindex } = getIndex(data);
-		req.post('menu/setNeedLog', {
+		req.POST('menu/setNeedLog', {
 			id: data.id,
 			needLog: data.needLog === 1 ? 0 : 1,
 		}).then(res => {

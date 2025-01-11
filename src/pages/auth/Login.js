@@ -3,7 +3,7 @@ import {Button, Form, Input, theme, App, Modal} from 'antd';
 import {
     useNavigate,
 } from "react-router-dom";
-import * as req from '../../util/request';
+import req from "../../util/request"
 import Helper from "../../util/Helper";
 
 const Login = () => {
@@ -25,7 +25,7 @@ const Login = () => {
     }, [])
     // 获取系统名称
     const getSystemName = () => {
-        req.post('login/getSystemName', {}).then(res => {
+        req.POST('login/getSystemName', {}).then(res => {
             if (res.code === 1) {
                 document.title = res.data.name;
                 setName(res.data.name);
@@ -34,7 +34,7 @@ const Login = () => {
     }
     // 获取图片验证码
     const getCodeUrl = () => {
-        req.post('login/getCaptcha', {}).then(res => {
+        req.POST('login/getCaptcha', {}).then(res => {
             if (res.code === 1) {
                 setCodeUrl(res.data.img);
                 setUuid(res.data.uuid);
@@ -44,7 +44,7 @@ const Login = () => {
     const onFinish = (data) => {
         setLoading(true);
         data.uuid = uuid;
-        req.post('login/login', data).then(res => {
+        req.POST('login/login', data).then(res => {
             if (res.code === 1) {
                 localStorage.setItem("honghuToken", res.data.token)
                 message.success("登录成功")

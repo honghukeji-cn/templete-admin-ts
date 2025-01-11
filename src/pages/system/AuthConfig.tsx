@@ -1,6 +1,6 @@
 import React, {forwardRef, useEffect, useImperativeHandle, useState} from 'react';
 import {Button, Form, Input, App, Row, Col, Switch} from 'antd';
-import * as req from '../../util/request';
+import   req from '../../util/request';
 import Helper from "../../util/Helper";
 import Title from "../../component/Title";
 
@@ -19,7 +19,7 @@ const Index = (_props: any, ref: any) => {
         getAuthConfig();
     },[])
     const getAuthConfig=()=>{
-        req.post("admin/getPwdRule", {}).then((res:any) => {
+        req.POST("admin/getPwdRule", {}).then((res:any) => {
             if (res.code === 1) {
                 res.data.auto_backup=res.data.auto_backup==1;
                 // console.log(res.data)
@@ -32,7 +32,7 @@ const Index = (_props: any, ref: any) => {
     const onFinish = (data: any) => {
         setLoading(true);
         data.auto_backup=data.auto_backup?1:0;
-        req.post("setting/setAuthConfig", data).then((res:any) => {
+        req.POST("setting/setAuthConfig", data).then((res:any) => {
             setLoading(false)
             if (res.code === 1) {
                message.success(res.msg)

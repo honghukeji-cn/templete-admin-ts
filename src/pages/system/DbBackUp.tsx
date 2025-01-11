@@ -3,7 +3,7 @@ import {Button, DatePicker, theme, App, Modal} from 'antd';
 import Title from '../../component/Title';
 import CustomTable from '../../component/Table';
 import CustomerSelect from "../../component/CustomerSelect";
-import * as req from '../../util/request';
+import  req from '../../util/request';
 import Text from '../../component/Text';
 import SearchView from "../../component/SearchView";
 import Helper from "../../util/Helper";
@@ -73,7 +73,7 @@ const Index = (_props: any, ref: any) => {
             content:"确定要下载该备份文件吗?",
             onOk:()=>{
                 return new Promise<void>(resolve => {
-                    req.post('backup/download/'+item.id, {  }).then((res:any) => {
+                    req.POST('backup/download/'+item.id, {  }).then((res:any) => {
                         resolve();
                         if(!res.code && res.code!=0)
                         {
@@ -90,7 +90,7 @@ const Index = (_props: any, ref: any) => {
             content:"确定要恢复该备份文件吗?",
             onOk:()=>{
                 return new Promise<void>(resolve => {
-                    req.post('backup/restoreDb/'+item.id, {  }).then((res:any) => {
+                    req.POST('backup/restoreDb/'+item.id, {  }).then((res:any) => {
                         resolve()
                         if (res.code == 1) {
                             message.success(res.msg);
@@ -109,7 +109,7 @@ const Index = (_props: any, ref: any) => {
             content:"确定要删除该备份文件吗?",
             onOk:()=>{
                 return new Promise<void>(resolve => {
-                    req.post('backup/removeBackUpFile/'+item.id, {  }).then((res:any) => {
+                    req.POST('backup/removeBackUpFile/'+item.id, {  }).then((res:any) => {
                         resolve()
                         if (res.code == 1) {
                             message.success(res.msg);
@@ -133,7 +133,7 @@ const Index = (_props: any, ref: any) => {
     }
     // 获取列表数据
     const getList = (info: any, callback: any) => {
-        req.post('backup/getList', {
+        req.POST('backup/getList', {
             page: info.page,
             size: info.size,
             orderBy: '',
@@ -152,7 +152,7 @@ const Index = (_props: any, ref: any) => {
             content:"确定要备份当前数据库?",
             onOk:()=>{
                 return new Promise<void>(resolve => {
-                    req.post('backup/backUpDb', {  }).then((res:any) => {
+                    req.POST('backup/backUpDb', {  }).then((res:any) => {
                         resolve()
                         if (res.code == 1) {
                             message.success(res.msg);

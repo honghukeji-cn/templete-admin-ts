@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Input,App } from 'antd';
-import * as req from '../../util/request';
+import  req from '../../util/request';
 import Helper from "../../util/Helper";
 
 const Index = () => {
@@ -11,7 +11,7 @@ const Index = () => {
     const [pwdRegTip,setPwdRegTip]=useState<string>("");
     useEffect(()=>{
         //获取密码正则表达式
-        req.post("admin/getPwdRule", {}).then((res:any) => {
+        req.POST("admin/getPwdRule", {}).then((res:any) => {
             if (res.code === 1) {
                 setPwdReg(res.data.pwd_reg)
                 setPwdRegTip(res.data.pwd_reg_desc)
@@ -22,7 +22,7 @@ const Index = () => {
     },[])
     const onFinish = (data: any) => {
         setLoading(true);
-        req.post("admin/editPwd", data).then((res:any) => {
+        req.POST("admin/editPwd", data).then((res:any) => {
             if (res.code === 1) {
                 message.success('修改成功，请重新登录！', 1.2, () => {
                     window.location.href = ''

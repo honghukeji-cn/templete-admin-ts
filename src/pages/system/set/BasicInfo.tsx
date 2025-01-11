@@ -5,7 +5,7 @@ import CustomTable from '../../../component/Table';
 import CustomModal from '../../../component/CustomerModal';
 import AddBasic from './AddBasic';  // 添加配置
 import Text from '../../../component/Text';
-import * as req from '../../../util/request';
+import  req from '../../../util/request';
 import SearchView from "../../../component/SearchView";
 
 // const typeList = [
@@ -89,7 +89,7 @@ const Index = (_props: any, ref: any) => {
 		tableRef.current.onRefresh()
 	}
 	const getList = (info: { page: number, size: number }, callback: any) => {
-		req.post('setting/settingList', {
+		req.POST('setting/settingList', {
 			page: info.page,
 			size: info.size,
 			orderBy: ''
@@ -114,15 +114,18 @@ const Index = (_props: any, ref: any) => {
 			centered: true,
 			maskClosable: true,
 			onOk: () => {
-				req.post('setting/delSetting', { id }).then(res => {
-					if (res.code === 1) {
-						if (res.code == 1) {
-							message.success(res.msg, 1.2);
-							refresh();
-						} else {
-							message.error(res.msg, 1.2);
+				return new Promise<void>((resolve)=>{
+					req.POST('setting/delSetting', { id }).then(res => {
+						resolve();
+						if (res.code === 1) {
+							if (res.code == 1) {
+								message.success(res.msg, 1.2);
+								refresh();
+							} else {
+								message.error(res.msg, 1.2);
+							}
 						}
-					}
+					})
 				})
 			}
 		})

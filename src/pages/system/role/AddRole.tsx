@@ -1,6 +1,6 @@
 import React, { useImperativeHandle, forwardRef, useEffect, useState, useRef } from 'react';
 import { Button, Checkbox, Form, Input, App, Spin } from 'antd';
-import * as req from '../../../util/request';
+import  req from '../../../util/request';
 
 interface CheckBoxValue {
     ids?: [];
@@ -20,7 +20,7 @@ const CustomCheckBox: React.FC<CustomCheckBoxProps> = ({ value = {}, onChange })
     }, [])
     const getMenus = () => {
         setLoading(false);
-        req.post('role/addRoleGetMenus', {}).then(res => {
+        req.POST('role/addRoleGetMenus', {}).then(res => {
             if (res.code == 1) {
                 let ids: any = value;
                 let menu = res.data;
@@ -264,7 +264,7 @@ const Index = (_props: any, ref: any) => {
             url = 'role/editRole';
             data.role_id = _props.data.role_id;
         }
-        req.post(url, data).then(res => {
+        req.POST(url, data).then(res => {
             if (res.code === 1) {
                 message.success(res.msg);
                 _props.onOk && _props.onOk();

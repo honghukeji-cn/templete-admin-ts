@@ -4,7 +4,7 @@ import Title from '../../../component/Title';
 import CustomTable from '../../../component/Table';
 import CustomModal from '../../../component/CustomerModal';
 import CustomerSelect from "../../../component/CustomerSelect";
-import * as req from '../../../util/request';
+import req from '../../../util/request';
 import AddAdmin from './AddAdmin';
 import SearchView from "../../../component/SearchView";
 import Text from "../../../component/Text";
@@ -73,7 +73,7 @@ const Index = (_props: any, ref: any) => {
 									// 	})
 									// });
 									return new Promise<void>(resolve => {
-										req.post('admin/changeAdminStatus/'+item.admin_id, {  }).then((res:any) => {
+										req.POST('admin/changeAdminStatus/'+item.admin_id, {  }).then((res) => {
 											resolve();
 											if (res.code == 1) {
 												refresh()
@@ -125,7 +125,7 @@ const Index = (_props: any, ref: any) => {
 	}
 	// 获取列表数据
 	const getList = (info: any, callback: any) => {
-		req.post('admin/adminList', {
+		req.POST('admin/adminList', {
 			page: info.page,
 			size: info.size,
 			orderBy: '',
@@ -151,7 +151,7 @@ const Index = (_props: any, ref: any) => {
 			centered: true,
 			maskClosable: true,
 			onOk: () => {
-				req.post('admin/delAdmin', { admin_id: data.admin_id }).then(res => {
+				req.POST('admin/delAdmin', { admin_id: data.admin_id }).then(res => {
 					if (res.code == 1) {
 						refresh()
 					} else {

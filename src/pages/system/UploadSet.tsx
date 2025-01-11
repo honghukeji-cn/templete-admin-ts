@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } f
 import type { FC } from 'react';
 import {App, Button, Col, Form, Input, Row, Switch} from 'antd';
 import Title from '../../component/Title';
-import * as req from '../../util/request';
+import   req from '../../util/request';
 import type { FormInstance } from 'antd/es/form';
 
 const Index = (_props: any, ref: any) => {
@@ -23,7 +23,7 @@ const Index = (_props: any, ref: any) => {
     }))
     //
     const refresh = () => {
-        req.post('setting/getUploadConfig', {}).then(res => {
+        req.POST('setting/getUploadConfig', {}).then(res => {
             if (res.code === 1) {
                 res.data.qiniu.visible = false;
                 res.data.alioss.visible = false;
@@ -77,7 +77,7 @@ const Index = (_props: any, ref: any) => {
         } else {
             obj.visible = obj.visible ? 4 : 0;
         }
-        req.post(url, obj).then(res => {
+        req.POST(url, obj).then(res => {
             if (res.code === 1) {
                 message.success(res.msg, 1.2);
                 refresh();
