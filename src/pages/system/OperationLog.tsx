@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, forwardRef, useRef, useState, useEffect } from 'react';
-import { Button, Input, theme, App } from 'antd';
+import {Button, Input, theme, App, Tooltip} from 'antd';
 import Title from '../../component/Title';
 import CustomTable from '../../component/Table';
 import CustomerSelect from "../../component/CustomerSelect";
@@ -28,21 +28,66 @@ const Index = (_props: any, ref: any) => {
         }, {
             title: '操作人',
             align: 'center',
-            dataIndex: 'username'
+            width: 120,
+            dataIndex: 'userName',
+            render:(name:string)=>(
+                name || "-"
+            )
         }, {
             title: '操作内容',
             align: 'center',
-            dataIndex: 'desc',
-            render: (time: string) => `${time || '-'}`
+            width: 150,
+            dataIndex: 'operation'
+        }, {
+            title: '请求方法',
+            align: 'center',
+            width: 200,
+            dataIndex: 'method',
+            render: (method: string) => {
+                let arr=method.split(".")
+                console.log(arr)
+                return(
+                    <Tooltip title={method}>
+                        <p className={"line1"}>{arr[arr.length-1]}</p>
+                    </Tooltip>
+                );
+            }
+        }, {
+            title: '请求参数',
+            align: 'center',
+            width: 200,
+            dataIndex: 'params',
+            render: (method: string) => {
+                return(
+                    <Tooltip title={method}>
+                        <p className={"line1"}>{method}</p>
+                    </Tooltip>
+                );
+            }
+        }, {
+            title: '响应内容',
+            align: 'center',
+            width: 200,
+            dataIndex: 'bake',
+            render: (method: string) => {
+                return(
+                    <Tooltip title={method}>
+                        <p className={"line1"}>{method}</p>
+                    </Tooltip>
+                );
+            }
         }, {
             title: '操作IP',
             align: 'center',
+            width: 150,
             dataIndex: 'ip',
             render: (ip: string) => `${ip || '-'}`
         }, {
             title: '操作时间',
             align: 'center',
-            dataIndex: 'atime'
+            width: 180,
+            fixed:"right",
+            dataIndex: 'createTime'
         }
     ]
     useEffect(() => {

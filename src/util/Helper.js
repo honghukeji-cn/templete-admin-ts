@@ -12,6 +12,7 @@ export default class Helper {
 		return num
 	}
 	static getNums(value) {
+
 		// 只允许输入数字
 		value = value.replace(/[^\d]/g, '')
 		return value
@@ -184,5 +185,35 @@ export default class Helper {
 
 		window.URL.revokeObjectURL(blobUrl);
 
+
+
+	}
+
+
+	static findNode({tree, id, idKey = 'id', childrenKey = 'children',}) {
+		let node = tree.find(item => item[idKey] === id)
+		if (node && node[idKey] === id) {
+
+			return {
+				flag: true,
+				data: node
+			}
+		} else {
+			for (let i = 0; i < tree.length; i++) {
+				if (!tree[i][childrenKey]) continue
+				node = Helper.findNode({
+					tree: tree[i][childrenKey],
+					id,
+					idKey,
+					childrenKey,
+				})
+				if (node.flag) {
+					return node
+				}
+			}
+		}
+		return {
+			flag: false,
+		}
 	}
 }

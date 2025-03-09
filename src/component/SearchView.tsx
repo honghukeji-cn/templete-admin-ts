@@ -2,9 +2,11 @@ import React, {useImperativeHandle, forwardRef, useState, ReactNode} from 'react
 import {Button, Col, Form, Input, Modal, Row, Space, theme} from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 interface SearchFormItem {
-    node:ReactNode,
-    label:string,
-    name:string
+    node:ReactNode;
+    rule?:any;
+    col?:number;
+    label:string;
+    name:string;
 }
 interface  SearchViewProps{
     onSearch?: (data:any) => void;//搜索回调
@@ -30,14 +32,14 @@ const Refuse = (_props: SearchViewProps, ref: any) => {
             >
                 <Row align={"stretch"} gutter={12}>
                     {_props.items?.map((item,key)=>(
-                        <Col key={key} span={6} xs={24} sm={12} md={8} lg={8} xl={8} xxl={6} >
-                            <Form.Item label={item.label} name={item.name}>
+                        <Col key={key} span={6} xs={24} sm={12} md={8} lg={8} xl={6} xxl={item.col || 4} >
+                            <Form.Item label={item.label} rules={item.rule} name={item.name}>
                                 {item.node}
                             </Form.Item>
                         </Col>
                     ))}
                     {expand && _props.expandItems?.map((item,key)=>(
-                        <Col key={key} className={"formCol"} style={{height:30}} span={6} xs={24} sm={12} md={8} lg={8} xl={8} xxl={6} >
+                        <Col key={key} className={"formCol"} style={{height:30}} span={6} xs={24} sm={12} md={8} lg={8} xl={8} xxl={4} >
                             <Form.Item label={item.label} name={item.name}>
                                 {item.node}
                             </Form.Item>

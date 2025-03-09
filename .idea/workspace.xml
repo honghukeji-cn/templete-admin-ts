@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="28e8e385-64bc-4239-aa17-1fb0fc5d2f43" name="Default Changelist" comment="修复图片上传和富文本框">
+    <list default="true" id="28e8e385-64bc-4239-aa17-1fb0fc5d2f43" name="Default Changelist" comment="修改请求">
+      <change afterPath="$PROJECT_DIR$/src/pages/Route.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/Store.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/CustomerSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/CustomerSelect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/FileList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/FileList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/SearchView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/SearchView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Upload.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Upload.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Page404.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Page404.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/auth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/AuthConfig.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/AuthConfig.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/DbBackUp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/DbBackUp.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/EditPwd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/EditPwd.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/system/OperationLog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/OperationLog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/UploadSet.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/UploadSet.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/UserInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/UserInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/admin/AddAdmin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/admin/AddAdmin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/admin/AdminList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/admin/AdminList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/menu/AddMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/menu/AddMenu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/menu/MenuSet.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/menu/MenuSet.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/role/AddRole.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/role/AddRole.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/role/RoleList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/role/RoleList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/set/AddBasic.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/set/AddBasic.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/system/set/BasicInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/system/set/BasicInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/Helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/global.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +45,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/util" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
@@ -62,6 +53,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/util" />
       <recent name="$PROJECT_DIR$/src/pages" />
       <recent name="$PROJECT_DIR$/src/static" />
     </key>
@@ -107,7 +99,14 @@
       <workItem from="1733196395112" duration="292000" />
       <workItem from="1733235833701" duration="625000" />
       <workItem from="1734797994508" duration="606000" />
-      <workItem from="1736492500956" duration="5496000" />
+      <workItem from="1736492500956" duration="6178000" />
+      <workItem from="1737014379580" duration="1205000" />
+      <workItem from="1738760550648" duration="7742000" />
+      <workItem from="1739095906840" duration="20000" />
+      <workItem from="1739095938816" duration="23000" />
+      <workItem from="1739246673979" duration="158000" />
+      <workItem from="1739289969762" duration="30000" />
+      <workItem from="1741501965159" duration="4534000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1724315054792</created>
@@ -144,7 +143,14 @@
       <option name="project" value="LOCAL" />
       <updated>1729650048983</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="修改请求">
+      <created>1736602639044</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1736602639044</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,7 +172,8 @@
     <MESSAGE value="init" />
     <MESSAGE value="更新table默认宽度" />
     <MESSAGE value="修复图片上传和富文本框" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复图片上传和富文本框" />
+    <MESSAGE value="修改请求" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改请求" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -2,7 +2,6 @@ import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'rea
 import {Upload, App, Modal} from 'antd';
 import  req from '../util/request';
 import COS from 'cos-js-sdk-v5';
-import Global from '../util/global';
 
 let key = '';
 

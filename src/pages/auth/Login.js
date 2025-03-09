@@ -19,7 +19,11 @@ const Login = () => {
     const [name, setName] = useState('鸿鹄科技管理后台');
     const [loading, setLoading] = useState(false);
     useEffect(() => {
-        window.reset&&window.reset()
+        window.reset&&window.reset();
+        if(localStorage.getItem("honghuToken")){
+            navigate('/admin', { replace: true, })
+            return;
+        }
         getSystemName();
         getCodeUrl();
     }, [])
@@ -48,7 +52,7 @@ const Login = () => {
             if (res.code === 1) {
                 localStorage.setItem("honghuToken", res.data.token)
                 message.success("登录成功")
-                navigate('/home', { replace: true, })
+                navigate('/admin', { replace: true, })
             } else {
                 getCodeUrl();
                 var  sub=res.msg.substr(0,5);

@@ -3,25 +3,17 @@ import {Layout, Menu, Dropdown, Tabs, App, theme, Modal} from 'antd';
 import   req from '../util/request';
 import CustomModal from '../component/CustomerModal';
 import Title from '../component/Title';
-
+import {Components,getRoute} from "./Route";
+import Store from "../util/Store";
+import {Outlet, useLocation, useNavigate} from 'react-router-dom'
 // 子页面
 import EditPwd from './system/EditPwd';  //修改密码
 import UserInfo from './system/UserInfo';  //个人信息
 import SetColor from './system/SetColor';  //主题配色
-// import RoleList from "./system/role/RoleList";
 // loading页
 import Loading from './Loading';
 import Page404 from "./Page404";
-// 路由
-const AdminList = lazy(() => import('./system/admin/AdminList'));  // 管理员列表
-const RoleList = lazy(() => import('./system/role/RoleList'));  //角色列表
-
-const BasicInfo = lazy(() => import('./system/set/BasicInfo'));  // 基本信息配置
-const MenuSet = lazy(() => import('./system/menu/MenuSet'));  // 菜单管理
-const UploadSet = lazy(() => import('./system/UploadSet'));  // 上传设置
-const OperationLog = lazy(() => import('./system/OperationLog'));  // 操作日志
-const AuthConfig = lazy(() => import('./system/AuthConfig'));  // 安全控制
-const DbBackUp = lazy(() => import('./system/DbBackUp'));  // 数据库备份列表
+import Helper from "../util/Helper";
 function getItem(label, key, path, icon, children, type) {
     return {
         key,
@@ -35,17 +27,6 @@ function getItem(label, key, path, icon, children, type) {
 
 const { Header, Content, Sider } = Layout;
 let rootSubmenuKeys = [];
-
-const Components = {
-    'AdminList': AdminList,
-    'RoleList': RoleList,
-    'BasicInfo': BasicInfo,
-    "MenuSet": MenuSet,
-    "UploadSet": UploadSet,
-    "OperationLog": OperationLog,
-    "AuthConfig": AuthConfig,
-    "DbBackUp":DbBackUp
-}
 let tabRef = [];
 const list = (path, id) => {
     var MyComponentt = Components[path];
@@ -104,6 +85,58 @@ const Index = () => {
                 }}>退出登录</p>
             )
         }]
+    const navigate = useNavigate()
+    useEffect(() => {
+
+        window.onpopstate = (e) => {
+
+            // 业务逻辑
+            const route = getRoute()
+            console.log(route,"route")
+            if (!route || !route.id) return
+            Store.path = route.id
+            const {data} = Helper.findNode({
+                tree: Store.menus,
+                id: route.id,
+                idKey: 'path',
+                childrenKey: 'child'
+            })
+            try {
+                setActiveKey(String(data.id));  // 设置选中tab
+
+                if (data.level === 2) {
+                    Store.routePosition = {
+                        p: data.p,
+                        s: data.s
+                    }
+                    setSelectedKeys([String(data.id), String(data.pid)]);  // 设置选中的menu
+                    setOpenKeys([String(data.pid)])  // 设置打开的menu
+
+                } else {
+                    Store.routePosition = {
+                        p: data.p,
+                    }
+                    setSelectedKeys([String(data.id)]);  // 设置选中的menu
+                    setOpenKeys([String(data.id)])  // 设置打开的menu
+                    //
+
+                }
+            } catch (e) {
+                console.log(e)
+            }
+        };
+        return () => {
+            // 回退事件只用于当前组件，则需要在组件销毁时把回退事件销毁
+            window.onpopstate = null;
+        };
+    }, []);
+    useEffect(() => {
+        if (path) {
+            Store.path = path
+            navigate(path, {replace: true})
+
+        }
+    }, [path])
     useEffect(() => {
         getData();
         setTimeout(() => {
@@ -112,7 +145,7 @@ const Index = () => {
     }, [])
     //安全退出
     const loginOut=()=>{
-        req.post('admin/loginOut', {}).then(res => {
+        req.POST('admin/loginOut', {}).then(res => {
             localStorage.removeItem('honghuToken')
             message.success('再见', () => {
                 window.location.href = '';
@@ -154,44 +187,19 @@ const Index = () => {
                         }
                     })
                 }
-
-                // let menus = [
-                //     {
-                //         id: 1, title: '基本管理', path: '', icon: 'icon-yonghu', child: [
-                //             // { id: 2, title: "角色列表", icon: "", path: "RoleList" },
-                //             { id: 5, title: "管理员列表", icon: "", path: "AdminList" },
-                //             { id: 36, title: "操作日志", icon: "", path: "OperationLog" }
-                //         ]
-                //     },
-                //     {
-                //         id: 7, title: "系统设置", path: "", icon: "icon-xitongshezhi", child: [
-                //             { id: 15, title: "菜单管理", icon: "", path: "MenuSet" },
-                //             { id: 25, title: "基本信息配置", icon: "", path: "BasicInfo" },
-                //             { id: 26, title: "上传设置", icon: "", path: "UploadSet" },
-                //             { id: 27, title: "合作伙伴", icon: "", path: "Partners" },
-                //             { id: 28, title: "精选服务配置", icon: "", path: "ServiceConfig" },
-                //             { id: 29, title: "战略性新兴产业分类", icon: "", path: "ZlCate" },
-                //         ]
-                //     },
-                //     { id: 30, title: '企业管理', path: 'BusinessList', icon: 'icon-a-huanzhequnzhong', child: [] },
-                //     { id: 37, title: '科技中介机构管理', path: 'InstitutionList', icon: 'icon-a-huanzhequnzhong', child: [] },
-                //     {
-                //         id: 38, title: "新闻管理", path: "", icon: "icon-xitongshezhi", child: [
-                //             { id: 39, title: "新闻分类", icon: "", path: "NewsType" },
-                //             { id: 40, title: "新闻列表", icon: "", path: "NewsList" },
-                //         ]
-                //     },
-                //     { id: 41, title: '成果管理', path: 'AchievementList', icon: 'icon-a-huanzhequnzhong', child: [] },
-                //     { id: 42, title: '需求管理', path: 'DemandList', icon: 'icon-a-huanzhequnzhong', child: [] },
-                //     { id: 43, title: '成功案例管理', path: 'SuccessfulCaseList', icon: 'icon-a-huanzhequnzhong', child: [] },
-                // ]
                 rootSubmenuKeys = [];
+                const routePosition = Store.routePosition
                 for (let i in menus) {
                     let child = menus[i].child;
+                    menus[i].level = 1
                     if (child.length > 0) {
                         rootSubmenuKeys.push(String(menus[i].id))
                         let c_menu = [];
                         for (let j in child) {
+                            child[j].p = Number(i)
+                            child[j].s = Number(j)
+                            child[j].pid = Number(menus[i].id)
+                            child[j].level = 2
                             c_menu.push(
                                 getItem(child[j].title, String(child[j].id), child[j].path)
                             )
@@ -203,32 +211,51 @@ const Index = () => {
                     } else {
                         if (menus[i].path && menus[i].path != '') {
                             items.push(
-                                getItem(menus[i].title, String(menus[i].id), menus[i].path, (<p className={`iconfont ${menus[i].icon}`}></p>))
+                                getItem(menus[i].title, String(menus[i].id), menus[i].path,
+                                    (<p className={`iconfont ${menus[i].icon}`}></p>))
                             )
                         }
                     }
                 }
+                Store.menus = menus
                 // 设置选择的menu
-                console.log(menus)
-                let setSelectedKeysArr,selectedLabel,selectedId,SelectedPath;
-                if(menus[0].child.length==0)
+                let setSelectedKeysArr, selectedLabel, selectedId, SelectedPath;
+                if(menus[routePosition.p].child.length === 0)
                 {
-                    setSelectedKeysArr=[String(menus[0].id)];
-                    selectedLabel={ label: menus[0].title, key: String(menus[0].id), path: menus[0].path, closable: false }
-                    selectedId=String(menus[0].id)
-                    SelectedPath=String(menus[0].path)
+                    setSelectedKeysArr = [String(menus[routePosition.p].id)];
+                    selectedLabel = {
+                        label: menus[routePosition.p].title,
+                        key: String(menus[routePosition.p].id),
+                        path: menus[routePosition.p].path,
+                        ...routePosition,
+                        closable: false
+                    }
+                    selectedId = String(menus[routePosition.p].id)
+                    SelectedPath = String(menus[routePosition.p].path)
                 }else{
-                    setSelectedKeysArr=[String(menus[0].child[0].id), String(menus[0].id)];
-                    selectedId=String(menus[0].child[0].id)
-                    SelectedPath=String(menus[0].child[0].path)
-                    selectedLabel= { label: menus[0].child[0].title, key: String(menus[0].child[0].id), path: menus[0].child[0].path, closable: false }
+                    setSelectedKeysArr = [String(menus[routePosition.p].child[routePosition.s].id), String(menus[routePosition.p].id)];
+                    selectedId = String(menus[routePosition.p].child[routePosition.s].id)
+                    SelectedPath = String(menus[routePosition.p].child[routePosition.s].path)
+                    selectedLabel = {
+                        label: menus[routePosition.p].child[routePosition.s].title,
+                        key: String(menus[routePosition.p].child[routePosition.s].id),
+                        path: menus[routePosition.p].child[routePosition.s].path,
+                        ...routePosition,
+                        closable: false
+                    }
                 }
                 setSelectedKeys(setSelectedKeysArr)
                 // 设置左边menu
                 setMenu(items)
                 // 设置打开的menu
-                setOpenKeys([String(rootSubmenuKeys[0])])
 
+                if (menus[routePosition.p].child.length) {
+                    // console.log(menus[routePosition.p].id)
+                    // console.log([String(rootSubmenuKeys[routePosition.p])])
+                    setOpenKeys([String(menus[routePosition.p].id)])
+
+                }
+                // setOpenKeys([String(rootSubmenuKeys[0])])
                 selectedLabel.children=list(selectedLabel.path,selectedLabel.key)
                 // 设置tab页
                 setTabs([
@@ -261,8 +288,14 @@ const Index = () => {
                                 label: child[index].label,
                                 key: String(child[index].key),
                                 path: child[index].path,
+                                p: Number(i),
+                                s: Number(index)
 
                             });
+                            Store.routePosition = {
+                                p: Number(i),
+                                s: Number(index)
+                            }
                             // 设置内容页
                             setPath(child[index].path);
                             break bsd
@@ -272,8 +305,10 @@ const Index = () => {
         } else {  // 以及存在且path不为空
             // 设置选择的tab
             setActiveKey(String(row.key))
+            const p = menu.findIndex(item => item.key == row.key)
             // 调用tab变化
-            add({ label: row.label, key: String(row.key), path: row.path });
+            add({ label: row.label, key: String(row.key), path: row.path,
+                p });
             // 设置内容页
             setPath(row.path);
         }
@@ -316,7 +351,9 @@ const Index = () => {
 
         } else {
             setTabs([...tabs, { label: data.label, key: data.key, path: data.path, closable: true,
-                children:list(data.path,data.key)
+                children:list(data.path,data.key),
+                p: data.p,
+                s: data.s
             }])
         }
     }
@@ -324,6 +361,10 @@ const Index = () => {
     const onChange = (key) => {
         changeKeys(key);
         let index = tabs.findIndex(item => item.key == key);
+        Store.routePosition = {
+            p: Number(tabs[index].p),
+            s: Number(tabs[index].s)
+        }
         if (index > -1) {
             setPath(tabs[index].path);  // 设置内容页
         }

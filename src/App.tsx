@@ -7,19 +7,13 @@ import {
 	Navigate,
 } from "react-router-dom";
 import { App } from 'antd';
+import CustomerRouter from "./pages/Route"
 import Loading from './pages/Loading';  // loading页
-const Login = lazy(() => import('./pages/auth/Login'));
-const Layout = lazy(() => import('./pages/Layout'));
 const Index: FC = () => (
 	<React.Fragment>
 		<Router>
 			<Suspense fallback={<Loading />}>
-				<Routes>
-					<Route path="login" element={<Login />} />
-					<Route path="home" element={<Layout />} />
-					{/* 默认访问----重定向至首页 */}
-					<Route path="" element={<Navigate to="/login" />} />
-				</Routes>
+				<CustomerRouter />
 			</Suspense>
 		</Router>
 	</React.Fragment>
