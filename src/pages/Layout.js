@@ -102,6 +102,7 @@ const Index = () => {
                 childrenKey: 'child'
             })
             try {
+                console.log(data,"data")
                 setActiveKey(String(data.id));  // 设置选中tab
 
                 if (data.level === 2) {
@@ -122,7 +123,7 @@ const Index = () => {
 
                 }
             } catch (e) {
-                console.log(e)
+                console.error("error",e)
             }
         };
         return () => {
@@ -188,6 +189,13 @@ const Index = () => {
                     })
                 }
                 rootSubmenuKeys = [];
+                if(!Store.routePosition)
+                {
+                    Store.routePosition={
+                        p:0,s:0
+                    }
+                }
+
                 const routePosition = Store.routePosition
                 for (let i in menus) {
                     let child = menus[i].child;
@@ -220,7 +228,8 @@ const Index = () => {
                 Store.menus = menus
                 // 设置选择的menu
                 let setSelectedKeysArr, selectedLabel, selectedId, SelectedPath;
-                if(menus[routePosition.p].child.length === 0)
+                console.log(routePosition)
+                if(routePosition && routePosition.p && menus[routePosition.p].child.length === 0)
                 {
                     setSelectedKeysArr = [String(menus[routePosition.p].id)];
                     selectedLabel = {
