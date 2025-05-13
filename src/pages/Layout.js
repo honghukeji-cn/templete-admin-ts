@@ -195,7 +195,6 @@ const Index = () => {
                         p:0,s:0
                     }
                 }
-
                 const routePosition = Store.routePosition
                 for (let i in menus) {
                     let child = menus[i].child;
